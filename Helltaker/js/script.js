@@ -1,6 +1,6 @@
 var GAME = {
     width: 1000,
-    height: 650,
+    height: 680,
     canvasContext: null,
     background: null,
 }
@@ -18,8 +18,8 @@ var BOX = {
 }
 
 var GOLD = {
-    x: 200,
-    y: 200,
+    x: 470,
+    y: 240,
     chest: null,
 }
 
@@ -62,6 +62,9 @@ function _initCanvas(canvas) {
 
 function _draw() {
 
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     if (GAME.background)
@@ -72,6 +75,12 @@ function _draw() {
         GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y);
     if (GOLD.chest)
         GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y);
+
+    context.font = '20px Crimson Pro';
+    context.fillStyle = "white";
+
+    context.fillText("LIFE ADVICE [BUTTON H]", 280, 650);
+
 }
 
 function _update() {
