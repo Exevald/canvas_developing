@@ -46,7 +46,7 @@ function _init() { //Главная функция
     block.onload = function() {
         BOX.block = block;
     }
-    block.onload = function() {
+    chest.onload = function() {
         GOLD.chest = chest;
     }
 
@@ -67,20 +67,43 @@ function _draw() {
 
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
+    _drawBackground();
+    _drawHero();
+    _drawBlock();
+    _drawChest();
+    _drawText();    
+}
+
+function _drawBackground() {
     if (GAME.background)
         GAME.canvasContext.drawImage(GAME.background, 0, 0);
+}
+
+function _drawHero() {
     if (PLAYER.hero)
         GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 105, 130, PLAYER.x, PLAYER.y, 100, 100);
+}
+
+function _drawBlock() {
     if (BOX.block)
         GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y);
+}
+
+function _drawChest() {
     if (GOLD.chest)
         GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y);
+}
+
+function _drawText() {
+    
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
 
     context.font = '20px Crimson Pro';
     context.fillStyle = "white";
 
-    context.fillText("LIFE ADVICE [BUTTON H]", 280, 650);
-
+    context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 650);
+    context.fillText("• RESTART [BUTTON R] •", 540, 650);
 }
 
 function _update() {
