@@ -34,7 +34,7 @@ function _init() { //Главная функция
 
     background.src = 'img/bg.png';
     hero.src = 'img/hero.png';
-    block.src = 'img/block2.png';
+    block.src = 'img/block.png';
     chest.src = 'img/chest.png';
 
     background.onload = function() {
