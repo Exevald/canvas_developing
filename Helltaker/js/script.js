@@ -68,10 +68,6 @@ function _main() {
 }
 
 function _draw() {
-
-    const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
-
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
