@@ -6,9 +6,12 @@ var GAME = {
 }
 
 var PLAYER = {
-    x: 600,
+    x0: 400,
+    y0: 450,
+    x: 400,
     y: 450,
     hero: null,
+    steps: 0,
 }
 
 var BOX = {
@@ -114,16 +117,37 @@ function _update() {
 }
 
 function _initEventsListeners() {
-    window.addEventListener("onkeydown", _onCanvasKeyDown);
+    window.addEventListener("keydown", _onCanvasKeyDown);
 }
 
 function _onCanvasKeyDown(event) {
-    switch(event) {
-        case "H":
-            console.log("HELP");
+    switch(event.code) {
+        case "KeyW": //UP
+            //console.log("W");
+            PLAYER.y -= 50;
             break;
-        case "R":
+        case "KeyA": //LEFT
+            //console.log("A");
+            PLAYER.x -= 50;
+            break;
+        case "KeyS": //DOWN
+            //console.log("S");
+            PLAYER.y += 50;
+            break;
+        case "KeyD": //RIGHT
+            //console.log("D");
+            PLAYER.x += 50;
+            break;
+        case "KeyR": //RESTART
             console.log("RESTART");
+            console.clear();
+            //ОБНУЛЕНИЕ КООРДИНАТ УРОВНЯ
+            PLAYER.x = PLAYER.x0;
+            PLAYER.y = PLAYER.y0;
+
+            break;
+        case "KeyH": //HELP
+            console.log("HELP");
             break;
     }
 }
