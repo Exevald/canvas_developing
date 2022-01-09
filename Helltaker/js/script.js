@@ -37,6 +37,8 @@ var BORDERS = [{
 
 }]
 
+var Advice = 0;
+
 function _init() { //Главная функция
 
     var canvas = document.getElementById("canvas");
@@ -63,7 +65,7 @@ function _init() { //Главная функция
     chest.onload = function () {
         GOLD.chest = chest;
     }
-    //_music();
+
     _initCanvas(canvas);
     _initEventsListeners();
     _main();
@@ -89,6 +91,9 @@ function _draw() {
     _drawHero();
     _drawChest();
     _drawText();
+
+    if (Advice === 1)
+        _drawAdvice()
 }
 
 function _drawBackground() { //Рисуем фон
@@ -99,12 +104,12 @@ function _drawBackground() { //Рисуем фон
 function _drawHero() { //Рисуем игрока
     if (PLAYER.hero)
         GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
-        if (PLAYER.sprite < 11) {
-            PLAYER.sprite++
-        } else {
-            PLAYER.sprite = 1
-        }
-        sleep(80)
+    if (PLAYER.sprite < 11) {
+        PLAYER.sprite++
+    } else {
+        PLAYER.sprite = 1
+    }
+    sleep(80)
 }
 
 function _drawBlock() { //Рисуем блоки
@@ -128,9 +133,22 @@ function _drawText() { //Выводим текст
     context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 650);
     context.fillText("• RESTART [BUTTON R] •", 540, 650);
 
-    context.font = '80px Crimson Pro';
+    context.font = '40px Crimson Pro';
+    context.fillText("STEPS:", 60, 430);
 
+    context.font = '80px Crimson Pro';
     context.fillText(PLAYER.steps, 80, 530);
+}
+
+function _drawAdvice() {
+
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    context.fillStyle = "white";
+    context.font = '20px Crimson Pro';
+    context.fillText("LIFE ADVICE", 100, 100);
+
 }
 
 function _update() {
@@ -145,17 +163,17 @@ function _boxCollision() {
         boxCollisionRight = PLAYER.x + PLAYER.size <= BOX.x + BOX.size,
         boxCollisionLeft = PLAYER.x + PLAYER.size >= BOX.x;
     if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
-        console.log("Collision!"); 
+        console.log("Collision!");
         _boxCollision = true;
     }
 
     return _boxCollision;
 }
 
-  function _playMusic() {
-        var BGMusic = document.getElementById("bg-music");
-        BGMusic.play();
-    }
+//   function _playMusic() {
+//         var BGMusic = document.getElementById("bg-music");
+//         BGMusic.play();
+//}
 
 function sleep(millis) {
     var t = (new Date()).getTime();
@@ -196,6 +214,10 @@ function _onCanvasKeyDown(event) {
             break;
         case "KeyH": //HELP
             console.log("HELP");
+            if (Advice === 0)
+                Advice = 1;
+            else
+                Advice = 0;
             break;
     }
 }
