@@ -125,6 +125,7 @@ function _initEventsListeners() {
     window.addEventListener("keydown", _onCanvasKeyDown);
 }
 
+
 function _onCanvasKeyDown(event) {
     switch(event.code) {
         case "KeyW": //UP
