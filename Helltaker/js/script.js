@@ -11,20 +11,23 @@ var PLAYER = {
     x: 410,
     y: 480,
     hero: null,
+    sprite: 1,
     steps0: 30,
     steps: 30,
 }
 
-var BOX = {
+var BOXES = [{
     x: 525,
     y: 380,
     block: null,
-}
+    size: 52,
+}]
 
 var GOLD = {
     x: 570,
     y: 240,
     chest: null,
+    size: 62,
 }
 
 function _init() { //Главная функция
@@ -41,16 +44,16 @@ function _init() { //Главная функция
     block.src = 'img/block.png';
     chest.src = 'img/chest.png';
 
-    background.onload = function() {
+    background.onload = function () {
         GAME.background = background;
     }
-    hero.onload = function() {
+    hero.onload = function () {
         PLAYER.hero = hero;
     }
-    block.onload = function() {
+    block.onload = function () {
         BOX.block = block;
     }
-    chest.onload = function() {
+    chest.onload = function () {
         GOLD.chest = chest;
     }
 
@@ -78,7 +81,7 @@ function _draw() {
     _drawBlock();
     _drawHero();
     _drawChest();
-    _drawText();    
+    _drawText();
 }
 
 function _drawBackground() { //Рисуем фон
@@ -88,7 +91,13 @@ function _drawBackground() { //Рисуем фон
 
 function _drawHero() { //Рисуем игрока
     if (PLAYER.hero)
-        GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 100, 130, PLAYER.x, PLAYER.y, 80, 80);
+        GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, 80, 80);
+        if (PLAYER.sprite < 11) {
+            PLAYER.sprite++
+        } else {
+            PLAYER.sprite = 1
+        }
+        sleep(100)
 }
 
 function _drawBlock() { //Рисуем блоки
@@ -102,7 +111,7 @@ function _drawChest() { //Рисуем сундук
 }
 
 function _drawText() { //Выводим текст
-    
+
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
 
@@ -118,33 +127,42 @@ function _drawText() { //Выводим текст
 }
 
 function _update() {
-
+    _boxCollision();
 }
 
 function _initEventsListeners() {
     window.addEventListener("keydown", _onCanvasKeyDown);
 }
+function _boxCollision() {
+    var boxCollisionDown = PLAYER.y >= BOX.y + BOX.size;
+    if (boxCollisionDown)
+        console.log("Collision down!")
+}
 
+function sleep(millis) {
+    var t = (new Date()).getTime();
+    var j = 0;
+    while (((new Date()).getTime() - t) < millis) {
+        j++;
+    }
+}
 
 function _onCanvasKeyDown(event) {
-    switch(event.code) {
+    switch (event.code) {
         case "KeyW": //UP
-            //console.log("W");
             PLAYER.y -= 50;
             PLAYER.steps -= 1;
             break;
         case "KeyA": //LEFT
-            //console.log("A");
             PLAYER.x -= 50;
             PLAYER.steps -= 1;
             break;
         case "KeyS": //DOWN
-            //console.log("S");
             PLAYER.y += 50;
             PLAYER.steps -= 1;
+
             break;
         case "KeyD": //RIGHT
-            //console.log("D");
             PLAYER.x += 50;
             PLAYER.steps -= 1;
             break;
