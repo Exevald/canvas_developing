@@ -6,10 +6,10 @@ var GAME = {
 }
 
 var PLAYER = {
-    x0: 400,
-    y0: 450,
-    x: 400,
-    y: 450,
+    x0: 410,
+    y0: 480,
+    x: 410,
+    y: 480,
     hero: null,
     steps0: 30,
     steps: 30,
@@ -81,27 +81,27 @@ function _draw() {
     _drawText();    
 }
 
-function _drawBackground() {
+function _drawBackground() { //Рисуем фон
     if (GAME.background)
         GAME.canvasContext.drawImage(GAME.background, 100, 0);
 }
 
-function _drawHero() {
+function _drawHero() { //Рисуем игрока
     if (PLAYER.hero)
-        GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 100, 125, PLAYER.x, PLAYER.y, 100, 125);
+        GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 100, 130, PLAYER.x, PLAYER.y, 80, 80);
 }
 
-function _drawBlock() {
+function _drawBlock() { //Рисуем блоки
     if (BOX.block)
         GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y);
 }
 
-function _drawChest() {
+function _drawChest() { //Рисуем сундук
     if (GOLD.chest)
         GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y);
 }
 
-function _drawText() {
+function _drawText() { //Выводим текст
     
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
