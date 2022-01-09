@@ -147,7 +147,7 @@ function _drawAdvice() {
 
     context.fillStyle = "white";
     context.font = '20px Crimson Pro';
-    context.fillText("LIFE ADVICE", 100, 100);
+    context.fillText("LIFE ADVICE", 800, 100);
 
 }
 
