@@ -1,27 +1,30 @@
 var GAME = {
-    width: 1200,
-    height: 680,
+    width: 1000,
+    height: 650,
     canvasContext: null,
     background: null,
 }
 
 var PLAYER = {
-    x0: 410,
-    y0: 480,
-    x: 410,
-    y: 480,
+    x0: 315,
+    y0: 470,
+    x: 315,
+    y: 470,
+    size: 50,
     hero: null,
     sprite: 1,
     steps0: 30,
     steps: 30,
+    speedx: 50,
+    speedy: 50,
 }
 
-var BOXES = [{
-    x: 525,
-    y: 380,
+var BOX = {
+    x: 425,
+    y: 397,
     block: null,
-    size: 52,
-}]
+    size: 50,
+}
 
 var GOLD = {
     x: 570,
@@ -86,12 +89,12 @@ function _draw() {
 
 function _drawBackground() { //Рисуем фон
     if (GAME.background)
-        GAME.canvasContext.drawImage(GAME.background, 100, 0);
+        GAME.canvasContext.drawImage(GAME.background, 0, 0);
 }
 
 function _drawHero() { //Рисуем игрока
     if (PLAYER.hero)
-        GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, 80, 80);
+        GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
         if (PLAYER.sprite < 11) {
             PLAYER.sprite++
         } else {
@@ -102,7 +105,7 @@ function _drawHero() { //Рисуем игрока
 
 function _drawBlock() { //Рисуем блоки
     if (BOX.block)
-        GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y);
+        GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y, 45, 45);
 }
 
 function _drawChest() { //Рисуем сундук
@@ -118,12 +121,12 @@ function _drawText() { //Выводим текст
     context.font = '20px Crimson Pro';
     context.fillStyle = "white";
 
-    context.fillText("• LIFE ADVICE [BUTTON H] •", 370, 650);
-    context.fillText("• RESTART [BUTTON R] •", 640, 650);
+    context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 650);
+    context.fillText("• RESTART [BUTTON R] •", 540, 650);
 
     context.font = '80px Crimson Pro';
 
-    context.fillText(PLAYER.steps, 180, 530);
+    context.fillText(PLAYER.steps, 80, 530);
 }
 
 function _update() {
@@ -134,9 +137,16 @@ function _initEventsListeners() {
     window.addEventListener("keydown", _onCanvasKeyDown);
 }
 function _boxCollision() {
-    var boxCollisionDown = PLAYER.y >= BOX.y + BOX.size;
-    if (boxCollisionDown)
-        console.log("Collision down!")
+    var boxCollisionDown = PLAYER.y + 30 <= BOX.y + BOX.size,
+        boxCollisionUp = PLAYER.y + PLAYER.size >= BOX.y,
+        boxCollisionRight = PLAYER.x + PLAYER.size <= BOX.x + BOX.size,
+        boxCollisionLeft = PLAYER.x + PLAYER.size >= BOX.x;
+    if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
+        console.log("Collision!"); 
+        _boxCollision = true;
+    }
+
+    return _boxCollision;
 }
 
 function sleep(millis) {
@@ -150,20 +160,20 @@ function sleep(millis) {
 function _onCanvasKeyDown(event) {
     switch (event.code) {
         case "KeyW": //UP
-            PLAYER.y -= 50;
+            PLAYER.y -= PLAYER.speedy;
             PLAYER.steps -= 1;
             break;
         case "KeyA": //LEFT
-            PLAYER.x -= 50;
+            PLAYER.x -= PLAYER.speedx;
             PLAYER.steps -= 1;
             break;
         case "KeyS": //DOWN
-            PLAYER.y += 50;
+            PLAYER.y += PLAYER.speedy;
             PLAYER.steps -= 1;
 
             break;
         case "KeyD": //RIGHT
-            PLAYER.x += 50;
+            PLAYER.x += PLAYER.speedx;
             PLAYER.steps -= 1;
             break;
         case "KeyR": //RESTART
