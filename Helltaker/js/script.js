@@ -11,7 +11,8 @@ var PLAYER = {
     x: 400,
     y: 450,
     hero: null,
-    steps: 0,
+    steps0: 30,
+    steps: 30,
 }
 
 var BOX = {
@@ -74,8 +75,8 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
-    _drawHero();
     _drawBlock();
+    _drawHero();
     _drawChest();
     _drawText();    
 }
@@ -110,6 +111,10 @@ function _drawText() {
 
     context.fillText("• LIFE ADVICE [BUTTON H] •", 370, 650);
     context.fillText("• RESTART [BUTTON R] •", 640, 650);
+
+    context.font = '80px Crimson Pro';
+
+    context.fillText(PLAYER.steps, 180, 530);
 }
 
 function _update() {
@@ -125,25 +130,31 @@ function _onCanvasKeyDown(event) {
         case "KeyW": //UP
             //console.log("W");
             PLAYER.y -= 50;
+            PLAYER.steps -= 1;
             break;
         case "KeyA": //LEFT
             //console.log("A");
             PLAYER.x -= 50;
+            PLAYER.steps -= 1;
             break;
         case "KeyS": //DOWN
             //console.log("S");
             PLAYER.y += 50;
+            PLAYER.steps -= 1;
             break;
         case "KeyD": //RIGHT
             //console.log("D");
             PLAYER.x += 50;
+            PLAYER.steps -= 1;
             break;
         case "KeyR": //RESTART
             console.log("RESTART");
             console.clear();
-            //ОБНУЛЕНИЕ КООРДИНАТ УРОВНЯ
+
+            //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
             PLAYER.x = PLAYER.x0;
             PLAYER.y = PLAYER.y0;
+            PLAYER.steps = PLAYER.steps0;
 
             break;
         case "KeyH": //HELP
