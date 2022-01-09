@@ -88,7 +88,7 @@ function _drawBackground() {
 
 function _drawHero() {
     if (PLAYER.hero)
-        GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 105, 130, PLAYER.x, PLAYER.y, 100, 100);
+        GAME.canvasContext.drawImage(PLAYER.hero, 0, 0, 100, 125, PLAYER.x, PLAYER.y, 100, 125);
 }
 
 function _drawBlock() {
