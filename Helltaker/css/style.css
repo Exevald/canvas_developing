@@ -5,6 +5,7 @@ body {
     height: 100%;
     justify-content: center;
     background-color: rgba(2, 2, 27, 1);
+    /*background-color: "white";*/
 }
 canvas {
     border: solid black 1px;

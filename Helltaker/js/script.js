@@ -1,24 +1,24 @@
 var GAME = {
-    width: 1000,
+    width: 1200,
     height: 680,
     canvasContext: null,
     background: null,
 }
 
 var PLAYER = {
-    x: 500,
+    x: 600,
     y: 450,
     hero: null,
 }
 
 var BOX = {
-    x: 500,
-    y: 500,
+    x: 525,
+    y: 380,
     block: null,
 }
 
 var GOLD = {
-    x: 470,
+    x: 570,
     y: 240,
     chest: null,
 }
@@ -34,7 +34,7 @@ function _init() { //Главная функция
 
     background.src = 'img/bg.png';
     hero.src = 'img/hero.png';
-    block.src = 'img/block.png';
+    block.src = 'img/block2.png';
     chest.src = 'img/chest.png';
 
     background.onload = function() {
@@ -51,6 +51,7 @@ function _init() { //Главная функция
     }
 
     _initCanvas(canvas);
+    _initEventsListeners();
     _main();
 }
 
@@ -58,6 +59,12 @@ function _initCanvas(canvas) {
     GAME.canvasContext = canvas.getContext("2d");
     canvas.width = GAME.width;
     canvas.height = GAME.height;
+}
+
+function _main() {
+    _draw()
+    _update();
+    requestAnimationFrame(_main);
 }
 
 function _draw() {
@@ -76,7 +83,7 @@ function _draw() {
 
 function _drawBackground() {
     if (GAME.background)
-        GAME.canvasContext.drawImage(GAME.background, 0, 0);
+        GAME.canvasContext.drawImage(GAME.background, 100, 0);
 }
 
 function _drawHero() {
@@ -102,16 +109,25 @@ function _drawText() {
     context.font = '20px Crimson Pro';
     context.fillStyle = "white";
 
-    context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 650);
-    context.fillText("• RESTART [BUTTON R] •", 540, 650);
+    context.fillText("• LIFE ADVICE [BUTTON H] •", 370, 650);
+    context.fillText("• RESTART [BUTTON R] •", 640, 650);
 }
 
 function _update() {
 
 }
 
-function _main() {
-    _draw()
-    _update();
-    requestAnimationFrame(_main);
+function _initEventsListeners() {
+    window.addEventListener("onkeydown", _onCanvasKeyDown);
+}
+
+function _onCanvasKeyDown(event) {
+    switch(event) {
+        case "H":
+            console.log("HELP");
+            break;
+        case "R":
+            console.log("RESTART");
+            break;
+    }
 }
