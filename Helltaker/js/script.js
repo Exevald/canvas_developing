@@ -134,8 +134,8 @@ function _drawText() { //Выводим текст
     context.font = '20px Crimson Pro';
     context.fillStyle = "white";
 
-    context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 650);
-    context.fillText("• RESTART [BUTTON R] •", 540, 650);
+    context.fillText("• LIFE ADVICE [BUTTON H] •", 270, 630);
+    context.fillText("• RESTART [BUTTON R] •", 540, 630);
 
     context.font = '40px Crimson Pro';
     context.fillText("STEPS:", 60, 430);
@@ -164,19 +164,19 @@ function _initEventsListeners() {
 
 var checkCollision = 0;
 
-function _boxCollision(checkCollision) {
-    var boxCollisionDown = PLAYER.y + 30 <= BOX.y + BOX.size,
-        boxCollisionUp = PLAYER.y + PLAYER.size >= BOX.y,
-        boxCollisionRight = PLAYER.x + PLAYER.size <= BOX.x + BOX.size,
-        boxCollisionLeft = PLAYER.x + PLAYER.size >= BOX.x;
+// function _boxCollision() {
+//         // allCollision = PLAYER.x + PLAYER.size / 2 > BOX.x && PLAYER.x + PLAYER.size / 2 < BOX.x + BOX.size && PLAYER.y + PLAYER.size / 2 > BOX.y && PLAYER.y + PLAYER.size / 2  < BOX.y + BOX.size
 
-    if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
-        console.log("Collision!");
-        checkCollision = 1;
-    } else checkCollision = 0;
+//     if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
+//         console.log("Collision!\n");
+//         checkCollision = 1;
+//     } else {
+//         checkCollision = 0;
+//         console.log("NOT COLLISION!\n")
+//     }
 
-    return checkCollision;
-}
+//     return checkCollision;
+// }
 
 
 function sleep(millis) {
@@ -194,31 +194,56 @@ function soundBackground() {
   }
 
 function _onCanvasKeyDown(event) {
-    _boxCollision(0);
+
+    var boxCollisionDown = PLAYER.y + 27 === BOX.y + BOX.size && PLAYER.x + 10 === BOX.x,
+        boxCollisionUp = PLAYER.y + PLAYER.size + 27 === BOX.y && PLAYER.x + 10 === BOX.x,
+        boxCollisionRight = PLAYER.x + 10 === BOX.x + BOX.size && PLAYER.y === BOX.y - 27,
+        boxCollisionLeft = PLAYER.x + PLAYER.size + 10 === BOX.x && PLAYER.y === BOX.y - 27;
+
     switch (event.code) {
         case "KeyW": //UP
-            if (checkCollision === 0) {
+            if (!boxCollisionDown) {
                 PLAYER.y -= PLAYER.speedy;
                 PLAYER.steps -= 1;
-            } else PLAYER.y += PLAYER.speedy;
+                console.log("PLAYER.x: ", PLAYER.x);
+                console.log("PLAYER.y: ", PLAYER.y);
+                console.log("BRUH ^з^: ", BOX.y + BOX.size);
+                console.log("BOX.x: ", BOX.x);
+                //console.log("Collision w");
+            }
             break;
         case "KeyA": //LEFT
-            if (checkCollision === 0) {
+            if (!boxCollisionRight) {
                 PLAYER.x -= PLAYER.speedx;
                 PLAYER.steps -= 1;
-            } else PLAYER.x += PLAYER.speedx;
+                console.log("PLAYER.x: ", PLAYER.x);
+                console.log("PLAYER.y: ", PLAYER.y);
+                console.log("BRUH ^з^: ", BOX.y + BOX.size);
+                console.log("BOX.x: ", BOX.x);
+                //console.log("Collision a");
+            }
             break;
         case "KeyS": //DOWN
-            if (checkCollision === 0) {
+            if (!boxCollisionUp) {
                 PLAYER.y += PLAYER.speedy;
                 PLAYER.steps -= 1;
-            } else PLAYER.y -= PLAYER.speedy;
+                console.log("PLAYER.x: ", PLAYER.x);
+                console.log("PLAYER.y: ", PLAYER.y);
+                console.log("BRUH ^з^: ", BOX.y + BOX.size);
+                console.log("BOX.x: ", BOX.x);
+                //console.log("Collision s");
+            }
             break;
         case "KeyD": //RIGHT
-            if (checkCollision === 0) {
+            if (!boxCollisionLeft) {
                 PLAYER.x += PLAYER.speedx;
                 PLAYER.steps -= 1;
-            } else PLAYER.x -= PLAYER.speedx;
+                console.log("PLAYER.x: ", PLAYER.x);
+                console.log("PLAYER.y: ", PLAYER.y);
+                console.log("BRUH ^з^: ", BOX.y + BOX.size);
+                console.log("BOX.x: ", BOX.x);
+                //console.log("Collision d");
+            }
             break;
         case "KeyR": //RESTART
             console.log("RESTART");
@@ -238,4 +263,5 @@ function _onCanvasKeyDown(event) {
                 Advice = 0;
             break;
     }
+    // _boxCollision();
 }
