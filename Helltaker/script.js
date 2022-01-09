@@ -13,7 +13,7 @@ var PLAYER = {
     size: 50,
     hero: null,
     sprite: 1,
-    steps0: 30,
+    steps0: 33,
     steps: 33,
     speedx: 50,
     speedy: 50,
@@ -114,7 +114,7 @@ function _drawHero() { //Рисуем игрока
     } else {
         PLAYER.sprite = 1
     }
-    sleep(80)
+    sleep(75)
 }
 
 function _drawBlock() { //Рисуем блоки
