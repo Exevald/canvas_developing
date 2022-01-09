@@ -162,7 +162,9 @@ function _initEventsListeners() {
     window.addEventListener("keydown", _onCanvasKeyDown);
 }
 
-function _boxCollision() {
+var checkCollision = 0;
+
+function _boxCollision(checkCollision) {
     var boxCollisionDown = PLAYER.y + 30 <= BOX.y + BOX.size,
         boxCollisionUp = PLAYER.y + PLAYER.size >= BOX.y,
         boxCollisionRight = PLAYER.x + PLAYER.size <= BOX.x + BOX.size,
@@ -170,10 +172,10 @@ function _boxCollision() {
 
     if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
         console.log("Collision!");
-        _boxCollision = true;
-    }
+        checkCollision = 1;
+    } else checkCollision = 0;
 
-    return _boxCollision;
+    return checkCollision;
 }
 
 
@@ -192,23 +194,31 @@ function soundBackground() {
   }
 
 function _onCanvasKeyDown(event) {
+    _boxCollision(0);
     switch (event.code) {
         case "KeyW": //UP
-            PLAYER.y -= PLAYER.speedy;
-            PLAYER.steps -= 1;
+            if (checkCollision === 0) {
+                PLAYER.y -= PLAYER.speedy;
+                PLAYER.steps -= 1;
+            } else PLAYER.y += PLAYER.speedy;
             break;
         case "KeyA": //LEFT
-            PLAYER.x -= PLAYER.speedx;
-            PLAYER.steps -= 1;
+            if (checkCollision === 0) {
+                PLAYER.x -= PLAYER.speedx;
+                PLAYER.steps -= 1;
+            } else PLAYER.x += PLAYER.speedx;
             break;
         case "KeyS": //DOWN
-            PLAYER.y += PLAYER.speedy;
-            PLAYER.steps -= 1;
-
+            if (checkCollision === 0) {
+                PLAYER.y += PLAYER.speedy;
+                PLAYER.steps -= 1;
+            } else PLAYER.y -= PLAYER.speedy;
             break;
         case "KeyD": //RIGHT
-            PLAYER.x += PLAYER.speedx;
-            PLAYER.steps -= 1;
+            if (checkCollision === 0) {
+                PLAYER.x += PLAYER.speedx;
+                PLAYER.steps -= 1;
+            } else PLAYER.x -= PLAYER.speedx;
             break;
         case "KeyR": //RESTART
             console.log("RESTART");
