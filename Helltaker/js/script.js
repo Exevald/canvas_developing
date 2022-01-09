@@ -130,7 +130,6 @@ function _drawText() { //Выводим текст
 }
 
 function _update() {
-    _boxCollision();
 }
 
 function _initEventsListeners() {
