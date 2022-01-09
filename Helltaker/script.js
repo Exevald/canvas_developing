@@ -43,10 +43,6 @@ function _init() { //Главная функция
 
     var canvas = document.getElementById("canvas");
 
-    // var audio = new Audio(); // Создаём новый элемент Audio
-    // audio.src = 'music/Vitality.mp3'; // Указываем путь к звуку "клика"
-    // audio.play // Автоматически запускаем
-
     var background = new Image(),
         hero = new Image(),
         block = new Image(),
