@@ -113,7 +113,7 @@ function _drawHero() { //Рисуем игрока
     } else {
         PLAYER.sprite = 1
     }
-    sleep(80)
+    sleep(75);
 }
 
 function _drawBlock() { //Рисуем блоки
@@ -161,11 +161,13 @@ function _update() {
 function _initEventsListeners() {
     window.addEventListener("keydown", _onCanvasKeyDown);
 }
+
 function _boxCollision() {
     var boxCollisionDown = PLAYER.y + 30 <= BOX.y + BOX.size,
         boxCollisionUp = PLAYER.y + PLAYER.size >= BOX.y,
         boxCollisionRight = PLAYER.x + PLAYER.size <= BOX.x + BOX.size,
         boxCollisionLeft = PLAYER.x + PLAYER.size >= BOX.x;
+
     if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
         console.log("Collision!");
         _boxCollision = true;
@@ -174,10 +176,6 @@ function _boxCollision() {
     return _boxCollision;
 }
 
-//   function _playMusic() {
-//         var BGMusic = document.getElementById("bg-music");
-//         BGMusic.play();
-//}
 
 function sleep(millis) {
     var t = (new Date()).getTime();
