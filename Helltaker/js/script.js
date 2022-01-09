@@ -14,7 +14,7 @@ var PLAYER = {
     hero: null,
     sprite: 1,
     steps0: 30,
-    steps: 30,
+    steps: 33,
     speedx: 50,
     speedy: 50,
 }
@@ -32,6 +32,10 @@ var GOLD = {
     chest: null,
     size: 62,
 }
+
+var BORDERS = [{
+
+}]
 
 function _init() { //Главная функция
 
@@ -59,7 +63,7 @@ function _init() { //Главная функция
     chest.onload = function () {
         GOLD.chest = chest;
     }
-
+    //_music();
     _initCanvas(canvas);
     _initEventsListeners();
     _main();
@@ -100,7 +104,7 @@ function _drawHero() { //Рисуем игрока
         } else {
             PLAYER.sprite = 1
         }
-        sleep(100)
+        sleep(80)
 }
 
 function _drawBlock() { //Рисуем блоки
@@ -147,6 +151,11 @@ function _boxCollision() {
 
     return _boxCollision;
 }
+
+  function _playMusic() {
+        var BGMusic = document.getElementById("bg-music");
+        BGMusic.play();
+    }
 
 function sleep(millis) {
     var t = (new Date()).getTime();
