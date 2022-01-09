@@ -82,6 +82,7 @@ function _initCanvas(canvas) {
 }
 
 function _main() {
+    soundBackground();
     _draw()
     _update();
     requestAnimationFrame(_main);
@@ -190,7 +191,7 @@ function sleep(millis) {
 function soundBackground() {
     var audio = new Audio(); // Создаём новый элемент Audio
     audio.src = 'music/Vitality.mp3'; // Указываем путь к звуку "клика"
-    audio.autoplay // Автоматически запускаем
+    audio.play // Автоматически запускаем
   }
 
 function _onCanvasKeyDown(event) {
