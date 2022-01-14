@@ -13,7 +13,7 @@ var PLAYER = {
     size: 50,
     hero: null,
     sprite: 1,
-    steps0: 30,
+    steps0: 33,
     steps: 33,
     speedx: 50,
     speedy: 50,
@@ -27,10 +27,20 @@ var BOX = {
 }
 
 var GOLD = {
-    x: 570,
-    y: 240,
+    x: 475,
+    y: 247,
     chest: null,
-    size: 62,
+    size: 50,
+}
+
+var ADVICE = {
+    x: 200,
+    y: 300,
+    width0: 970,
+    height0: 695,
+    width: 570,
+    height: 395,
+    cerberus: null,
 }
 
 var BORDERS = [{
@@ -43,19 +53,17 @@ function _init() { //Главная функция
 
     var canvas = document.getElementById("canvas");
 
-    // var audio = new Audio(); // Создаём новый элемент Audio
-    // audio.src = 'music/Vitality.mp3'; // Указываем путь к звуку "клика"
-    // audio.play // Автоматически запускаем
-
     var background = new Image(),
         hero = new Image(),
         block = new Image(),
-        chest = new Image();
+        chest = new Image(),
+        cerberus = new Image();
 
     background.src = 'img/bg.png';
     hero.src = 'img/hero.png';
     block.src = 'img/block.png';
     chest.src = 'img/chest.png';
+    cerberus.src = 'img/Cerberus.png';
 
     background.onload = function () {
         GAME.background = background;
@@ -68,6 +76,9 @@ function _init() { //Главная функция
     }
     chest.onload = function () {
         GOLD.chest = chest;
+    }
+    cerberus.onload = function () {
+        ADVICE.cerberus = cerberus;
     }
 
     _initCanvas(canvas);
@@ -92,12 +103,13 @@ function _draw() {
 
     _drawBackground();
     _drawBlock();
-    _drawHero();
     _drawChest();
-    _drawText();
+    _drawHero();
 
     if (Advice === 1)
-        _drawAdvice()
+        _drawAdvice();
+
+    _drawText();
 }
 
 function _drawBackground() { //Рисуем фон
@@ -123,7 +135,7 @@ function _drawBlock() { //Рисуем блоки
 
 function _drawChest() { //Рисуем сундук
     if (GOLD.chest)
-        GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y);
+        GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y, GOLD.size, GOLD.size);
 }
 
 function _drawText() { //Выводим текст
@@ -153,6 +165,9 @@ function _drawAdvice() {
     context.font = '20px Crimson Pro';
     context.fillText("LIFE ADVICE", 800, 100);
 
+    if (ADVICE.cerberus)
+        GAME.canvasContext.drawImage(ADVICE.cerberus, 0, 0, ADVICE.width0, ADVICE.height0, ADVICE.x, ADVICE.y, ADVICE.width, ADVICE.height);
+
 }
 
 function _update() {
@@ -163,20 +178,6 @@ function _initEventsListeners() {
 }
 
 var checkCollision = 0;
-
-// function _boxCollision() {
-//         // allCollision = PLAYER.x + PLAYER.size / 2 > BOX.x && PLAYER.x + PLAYER.size / 2 < BOX.x + BOX.size && PLAYER.y + PLAYER.size / 2 > BOX.y && PLAYER.y + PLAYER.size / 2  < BOX.y + BOX.size
-
-//     if (boxCollisionDown && boxCollisionUp && boxCollisionRight && boxCollisionLeft) {
-//         console.log("Collision!\n");
-//         checkCollision = 1;
-//     } else {
-//         checkCollision = 0;
-//         console.log("NOT COLLISION!\n")
-//     }
-
-//     return checkCollision;
-// }
 
 
 function sleep(millis) {
