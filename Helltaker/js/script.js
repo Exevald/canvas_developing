@@ -35,7 +35,7 @@ var GOLD = {
 
 var ADVICE = {
     x: 200,
-    y: 300,
+    y: 0,
     width0: 970,
     height0: 695,
     width: 570,
