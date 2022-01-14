@@ -105,11 +105,10 @@ function _draw() {
     _drawBlock();
     _drawChest();
     _drawHero();
-
+    _drawText();
     if (Advice === 1)
         _drawAdvice();
 
-    _drawText();
 }
 
 function _drawBackground() { //Рисуем фон
@@ -161,12 +160,21 @@ function _drawAdvice() {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
 
-    context.fillStyle = "white";
-    context.font = '20px Crimson Pro';
-    context.fillText("LIFE ADVICE", 800, 100);
+    context.fillStyle = "rgba(2, 2, 27, 1)";
+    // context.fillStyle = "white";
+    context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
 
     if (ADVICE.cerberus)
-        GAME.canvasContext.drawImage(ADVICE.cerberus, 0, 0, ADVICE.width0, ADVICE.height0, ADVICE.x, ADVICE.y, ADVICE.width, ADVICE.height);
+    GAME.canvasContext.drawImage(ADVICE.cerberus, 0, 0, ADVICE.width0, ADVICE.height0, ADVICE.x, ADVICE.y, ADVICE.width, ADVICE.height);
+
+    context.fillStyle = "rgba(169, 52, 63, 1)";
+    context.font = '21px Crimson Pro Bold';
+    context.fillText("• Cerberus, the Triple Demon •", 350, 430);
+
+    context.fillStyle = "white";
+    context.font = '20px Crimson Pro Bold';
+    context.fillText("Go through the whole map, breaking boxes and opening chests.", 240, 490);
+    context.fillText("GOOD LUCK!", 420, 520);
 
 }
 
