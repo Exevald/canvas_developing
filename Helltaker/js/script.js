@@ -10,6 +10,8 @@ var PLAYER = {
     y0: 470,
     x: 315,
     y: 470,
+    fx: 2,
+    fy: 7,
     size: 50,
     hero: null,
     sprite: 1,
@@ -22,6 +24,10 @@ var PLAYER = {
 var BOX = {
     x: 425,
     y: 397,
+    x0: 425,
+    y0: 397,
+    fx: 4,
+    fy: 5,
     block: null,
     size: 50,
 }
@@ -42,7 +48,10 @@ var ADVICE = {
     height: 395,
     cerberus: null,
 }
-
+var LOSE = {
+    x: 250,
+    y: 0,
+}
 var BORDERS = [{
 
 }]
@@ -108,7 +117,10 @@ function _draw() {
     _drawText();
     if (Advice === 1)
         _drawAdvice();
+    if (PLAYER.steps === 0) {
+        _lose();
 
+    }
 }
 
 function _drawBackground() { //Рисуем фон
@@ -126,7 +138,7 @@ function _drawHero() { //Рисуем игрока
     }
     sleep(75);
 }
-
+    
 function _drawBlock() { //Рисуем блоки
     if (BOX.block)
         GAME.canvasContext.drawImage(BOX.block, BOX.x, BOX.y, 45, 45);
@@ -165,7 +177,7 @@ function _drawAdvice() {
     context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
 
     if (ADVICE.cerberus)
-    GAME.canvasContext.drawImage(ADVICE.cerberus, 0, 0, ADVICE.width0, ADVICE.height0, ADVICE.x, ADVICE.y, ADVICE.width, ADVICE.height);
+        GAME.canvasContext.drawImage(ADVICE.cerberus, 0, 0, ADVICE.width0, ADVICE.height0, ADVICE.x, ADVICE.y, ADVICE.width, ADVICE.height);
 
     context.fillStyle = "rgba(169, 52, 63, 1)";
     context.font = '21px Crimson Pro Bold';
@@ -173,12 +185,49 @@ function _drawAdvice() {
 
     context.fillStyle = "white";
     context.font = '20px Crimson Pro Bold';
-    context.fillText("Go through the whole map, breaking boxes and opening chests.", 240, 490);
+    context.fillText("Go through the whole map, moving boxes and opening chests.", 240, 490);
     context.fillText("GOOD LUCK!", 420, 520);
 
 }
 
+function _fieldCollision(fieldx, fieldy) {
+    if ((fieldx === 1 && fieldy === 7) || (fieldx === 9 && fieldy === 7) || 
+        (fieldx === 1 && fieldy === 4) || (fieldx === 1 && fieldy === 3) || 
+        (fieldx === 4 && fieldy === 1) || (fieldx === 6 && fieldy === 1) || 
+        (fieldx === 9 && fieldy === 4) || (fieldx === 9 && fieldy === 3) || 
+        (fieldx === 3 && fieldy === 2) || (fieldx === 7 && fieldy === 2) || 
+        (fieldx === 3 && fieldy === 4) || (fieldx === 3 && fieldy === 3) || 
+        (fieldx === 2 && fieldy === 2) || (fieldx === 8 && fieldy === 2) || 
+        (fieldx === 7 && fieldy === 4) || (fieldx === 7 && fieldy === 3) || 
+        (fieldx === 5 && fieldy === 0)) {
+            return false;
+
+    } else return true 
+
+}
+
 function _update() {
+    
+}
+
+
+
+function _lose() {
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    context.fillStyle = "rgba(2, 2, 27, 1)";
+    // context.fillStyle = "white";
+    context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
+
+    if (ADVICE.cerberus)
+    GAME.canvasContext.drawImage(ADVICE.cerberus, ADVICE.width0 * 2, 0, ADVICE.width0, ADVICE.height0, LOSE.x, LOSE.y, ADVICE.width, ADVICE.height);
+
+    context.fillStyle = "white";
+    context.font = '30px Crimson Pro';
+    context.fillText("YOU LOSE! TRY AGAIN", 350, 450);
+    context.fillText("PRESS R TO RESTART", 361, 487);
+
 }
 
 function _initEventsListeners() {
@@ -196,81 +245,97 @@ function sleep(millis) {
     }
 }
 
-function soundBackground() {
-    var audio = new Audio(); // Создаём новый элемент Audio
-    audio.src = 'music/Vitality.mp3'; // Указываем путь к звуку "клика"
-    audio.autoplay // Автоматически запускаем
-  }
-
 function _onCanvasKeyDown(event) {
 
     var boxCollisionDown = PLAYER.y + 27 === BOX.y + BOX.size && PLAYER.x + 10 === BOX.x,
         boxCollisionUp = PLAYER.y + PLAYER.size + 27 === BOX.y && PLAYER.x + 10 === BOX.x,
         boxCollisionRight = PLAYER.x + 10 === BOX.x + BOX.size && PLAYER.y === BOX.y - 27,
-        boxCollisionLeft = PLAYER.x + PLAYER.size + 10 === BOX.x && PLAYER.y === BOX.y - 27;
+        boxCollisionLeft = PLAYER.x + PLAYER.size + 10 === BOX.x && PLAYER.y === BOX.y - 27
+       // fieldCollision = PLAYER.fy > 1 && PLAYER.fy <= 7 && PLAYER.fx > 1 && PLAYER.fx < 9; 
+    if (PLAYER.steps > 0) {
+        switch (event.code) {
+            case "KeyW": //UP
+                if (!boxCollisionDown && PLAYER.fy > 1 && _fieldCollision(PLAYER.fx, PLAYER.fy - 1)) {
+                    PLAYER.y -= PLAYER.speedy;
+                    PLAYER.steps -= 1;
+                    PLAYER.fy -= 1;
+                } else if (BOX.fx === PLAYER.fx && BOX.fy === PLAYER.fy - 1 && _fieldCollision(BOX.fx, BOX.fy - 1)) {
+                        BOX.y -= 50;
+                        BOX.fy -= 1;
+                        PLAYER.steps -= 1; 
+                }
+                break;
+            case "KeyA": //LEFT
+                if (!boxCollisionRight && PLAYER.fx > 1 && _fieldCollision(PLAYER.fx - 1, PLAYER.fy)) {
+                    PLAYER.x -= PLAYER.speedx;
+                    PLAYER.steps -= 1;
+                    PLAYER.fx -= 1;
+                } else if (BOX.fx === PLAYER.fx - 1 && BOX.fy === PLAYER.fy && _fieldCollision(BOX.fx - 1, BOX.fy) && BOX.fx > 1) {
+                    BOX.x -= 50;
+                    BOX.fx -= 1;
+                    PLAYER.steps -= 1; 
+            }
+                break;
+            case "KeyS": //DOWN
+                if (!boxCollisionUp  && PLAYER.fy < 7 && _fieldCollision(PLAYER.fx, PLAYER.fy + 1)) {
+                    PLAYER.y += PLAYER.speedy;
+                    PLAYER.steps -= 1;
+                    PLAYER.fy += 1;
+                } else if (BOX.fx === PLAYER.fx && BOX.fy === PLAYER.fy + 1 && _fieldCollision(BOX.fx, BOX.fy + 1) && BOX.fy < 7) {
+                    BOX.y += 50;
+                    BOX.fy += 1; 
+                    PLAYER.steps -= 1;
+            }
+                break;
+            case "KeyD": //RIGHT
+                if (!boxCollisionLeft && PLAYER.fx < 9 && _fieldCollision(PLAYER.fx + 1, PLAYER.fy)) {
+                    PLAYER.x += PLAYER.speedx;
+                    PLAYER.steps -= 1;
+                    PLAYER.fx += 1;
+                } else if (BOX.fx === PLAYER.fx + 1 && BOX.fy === PLAYER.fy && _fieldCollision(BOX.fx + 1, BOX.fy) && BOX.fx < 9) {
+                    BOX.x += 50;
+                    BOX.fx += 1; 
+                    PLAYER.steps -= 1;
+            }
+                break;
+            case "KeyR": //RESTART
+                console.log("RESTART");
+                console.clear();
 
-    switch (event.code) {
-        case "KeyW": //UP
-            if (!boxCollisionDown) {
-                PLAYER.y -= PLAYER.speedy;
-                PLAYER.steps -= 1;
-                console.log("PLAYER.x: ", PLAYER.x);
-                console.log("PLAYER.y: ", PLAYER.y);
-                console.log("BRUH ^з^: ", BOX.y + BOX.size);
-                console.log("BOX.x: ", BOX.x);
-                //console.log("Collision w");
-            }
-            break;
-        case "KeyA": //LEFT
-            if (!boxCollisionRight) {
-                PLAYER.x -= PLAYER.speedx;
-                PLAYER.steps -= 1;
-                console.log("PLAYER.x: ", PLAYER.x);
-                console.log("PLAYER.y: ", PLAYER.y);
-                console.log("BRUH ^з^: ", BOX.y + BOX.size);
-                console.log("BOX.x: ", BOX.x);
-                //console.log("Collision a");
-            }
-            break;
-        case "KeyS": //DOWN
-            if (!boxCollisionUp) {
-                PLAYER.y += PLAYER.speedy;
-                PLAYER.steps -= 1;
-                console.log("PLAYER.x: ", PLAYER.x);
-                console.log("PLAYER.y: ", PLAYER.y);
-                console.log("BRUH ^з^: ", BOX.y + BOX.size);
-                console.log("BOX.x: ", BOX.x);
-                //console.log("Collision s");
-            }
-            break;
-        case "KeyD": //RIGHT
-            if (!boxCollisionLeft) {
-                PLAYER.x += PLAYER.speedx;
-                PLAYER.steps -= 1;
-                console.log("PLAYER.x: ", PLAYER.x);
-                console.log("PLAYER.y: ", PLAYER.y);
-                console.log("BRUH ^з^: ", BOX.y + BOX.size);
-                console.log("BOX.x: ", BOX.x);
-                //console.log("Collision d");
-            }
-            break;
-        case "KeyR": //RESTART
-            console.log("RESTART");
-            console.clear();
-
-            //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
-            PLAYER.x = PLAYER.x0;
-            PLAYER.y = PLAYER.y0;
-            PLAYER.steps = PLAYER.steps0;
-
-            break;
-        case "KeyH": //HELP
-            console.log("HELP");
-            if (Advice === 0)
-                Advice = 1;
-            else
-                Advice = 0;
-            break;
+                //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
+                _restart();
+                
+                break;
+            case "KeyH": //HELP
+                console.log("HELP");
+                if (Advice === 0)
+                    Advice = 1;
+                else
+                    Advice = 0;
+                break;
+        }
+    } else {
+        if (event.code === "KeyR"){
+            _restart();
+        }
+    }
+    if (PLAYER.steps === 0) {
+        // window.close();
+        _draw();
+        // sleep(5000);
+      
     }
     // _boxCollision();
+}
+
+function _restart(){
+    PLAYER.x = PLAYER.x0;
+    PLAYER.y = PLAYER.y0;
+    PLAYER.steps = PLAYER.steps0;
+    PLAYER.fx = 2;
+    PLAYER.fy = 7;
+    BOX.x = BOX.x0;
+    BOX.y = BOX.y0;
+    BOX.fx = 4;
+    BOX.fy = 5;
 }
