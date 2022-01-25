@@ -6,9 +6,16 @@ var FIELD = {
 }
 
 
-
 function _init() { //Главная функция
     var canvas = document.getElementById("canvas");
+    var background = new Image();
+
+    background.src = 'source/background/1GrassFarm.png';
+
+    background.onload = function () {
+        FIELD.background = background;
+    }
+
     _initCanvas(canvas);
     _main();
 }
@@ -26,4 +33,10 @@ function _main() {
 
 function _draw() {
     FIELD.canvasContext.clearRect(0, 0, FIELD.width, FIELD.height);
+    _drawBackground();
+}
+
+function _drawBackground() { //Рисуем фон
+    if (FIELD.background)
+        FIELD.canvasContext.drawImage(FIELD.background, 0, 0);
 }

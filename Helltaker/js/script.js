@@ -23,24 +23,28 @@ var PLAYER = {
 
 var BOXES = [
     {
-        x: 425,
-        y: 397,
-        x0: 425,
-        y0: 397,
-        fx: 4,
-        fy: 5,
-        block: null,
-        size: 50,
-    },
-    {
         x: 325,
         y: 447,
         x0: 325,
         y0: 447,
         fx: 2,
+        fx0: 2,
         fy: 6,
+        fy0: 6,
         block: null,
         size: 50,
+    },
+    {
+        x: 425,
+        y: 397,
+        x0: 425,
+        y0: 397,
+        fx: 4,
+        fx0: 4,
+        fy: 5,
+        fy0: 5,
+        block: null,
+        size: 50, 
     },
     {
         x: 375,
@@ -48,17 +52,21 @@ var BOXES = [
         x0: 375,
         y0: 447,
         fx: 3,
+        fx0: 3,
         fy: 6,
+        fy0: 6,
         block: null,
         size: 50,
     },
     {
-        x: 525,
+        x: 425,
         y: 447,
-        x0: 525,
+        x0: 425,
         y0: 447,
         fx: 4,
+        fx0: 4,
         fy: 6,
+        fy0: 6,
         block: null,
         size: 50,
     }
@@ -87,6 +95,8 @@ var LOSE = {
 
 var Advice = 0;
 
+var i = 0;
+
 function _init() { //Главная функция
 
     var canvas = document.getElementById("canvas");
@@ -110,7 +120,9 @@ function _init() { //Главная функция
         PLAYER.hero = hero;
     }
     block.onload = function () {
-        BOXES.block = block;
+        for (i = 0; i < 4; i++)
+        BOXES[i].block = block;
+        
     }
     chest.onload = function () {
         GOLD.chest = chest;
@@ -139,7 +151,9 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
-    _drawBlock();
+    for (i = 0; i < 4; i++){
+        _drawBlock(i);
+    }
     _drawChest();
     _drawHero();
     _drawText();
@@ -167,10 +181,14 @@ function _drawHero() { //Рисуем игрока
     sleep(75);
 }
 
-function _drawBlock() { //Рисуем блоки
-    for (let i = 1; i < 4; i++)
-        if (BOXES[i].block)
-            GAME.canvasContext.drawImage(BOXES[i].block, BOXES[i].x, BOXES[i].y, 45, 45);
+function _drawBlock(num) { //Рисуем блоки
+
+    if (BOXES[num].block){
+        GAME.canvasContext.drawImage(BOXES[num].block, BOXES[num].x, BOXES[num].y, 45, 45);
+        //BOX.block.onload;
+        //GAME.canvasContext.fillRect(BOXES[num].x, BOXES[num].y, 45, 45);
+    }
+    console.log("Рисуем блок", i);
 }
 
 function _drawChest() { //Рисуем сундук
@@ -268,14 +286,46 @@ function sleep(millis) {
     }
 }
 
+function _boxCollisionDown(i, plr) {
+    if (plr.y + 27 === BOXES[i].y + BOXES[i].size && plr.x + 10 === BOXES[i].x){
+        return true
+    } else return false
+}
+
+function _boxCollisionUp(i, plr) {
+    if (plr.y + plr.size + 27 === BOXES[i].y && plr.x + 10 === BOXES[i].x){
+        return true
+    } else return false
+}
+
+function _boxCollisionLeft(i, plr) {
+    if (plr.x + plr.size + 10 === BOXES[i].x && plr.y === BOXES[i].y - 27){
+        return true
+    } else return false
+}
+
+function _boxCollisionRight(i, plr) {
+    if (plr.x + 10 === BOXES[i].x + BOXES[i].size && plr.y === BOXES[i].y - 27){
+        return true
+    } else return false
+}
+
+function _boxCollision(PLAYER) {
+    var boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER),
+        boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER),
+        boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER),
+        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER);  
+        
+    if (boxCollisionDown || boxCollisionLeft || boxCollisionRight || boxCollisionUp){
+        return true
+    } else return false
+}
 function _onCanvasKeyDown(event) {
-
-    for (let i = 0; i < 4; i++) {
-
-        var boxCollisionDown = PLAYER.y + 27 === BOXES[i].y + BOXES[i].size && PLAYER.x + 10 === BOXES[i].x,
-            boxCollisionUp = PLAYER.y + PLAYER.size + 27 === BOXES[i].y && PLAYER.x + 10 === BOXES[i].x,
-            boxCollisionRight = PLAYER.x + 10 === BOXES[i].x + BOXES[i].size && PLAYER.y === BOXES[i].y - 27,
-            boxCollisionLeft = PLAYER.x + PLAYER.size + 10 === BOXES[i].x && PLAYER.y === BOXES[i].y - 27;
+        var i = 0,
+        boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER),
+        boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER),
+        boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER),
+        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER); 
 
         if (PLAYER.steps > 0) {
             switch (event.code) {
@@ -284,44 +334,52 @@ function _onCanvasKeyDown(event) {
                         PLAYER.y -= PLAYER.speedy;
                         PLAYER.steps -= 1;
                         PLAYER.fy -= 1;
-                    } else if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1)) {
+                    } else for (let i = 0; i < 4; i++) {
+                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1)) {
                         BOXES[i].y -= 50;
                         BOXES[i].fy -= 1;
                         PLAYER.steps -= 1;
                     }
+                }
                     break;
                 case "KeyA": //LEFT
                     if (!boxCollisionRight && PLAYER.fx > 1 && _fieldCollision(PLAYER.fx - 1, PLAYER.fy)) {
                         PLAYER.x -= PLAYER.speedx;
                         PLAYER.steps -= 1;
                         PLAYER.fx -= 1;
-                    } else if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1) {
+                    } else for (let i = 0; i < 4; i++) { 
+                    if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1) {
                         BOXES[i].x -= 50;
                         BOXES[i].fx -= 1;
                         PLAYER.steps -= 1;
                     }
+                }
                     break;
                 case "KeyS": //DOWN
                     if (!boxCollisionUp && PLAYER.fy < 7 && _fieldCollision(PLAYER.fx, PLAYER.fy + 1)) {
                         PLAYER.y += PLAYER.speedy;
                         PLAYER.steps -= 1;
                         PLAYER.fy += 1;
-                    } else if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7) {
+                    } else for (let i = 0; i < 4; i++) { 
+                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7) {
                         BOXES[i].y += 50;
                         BOXES[i].fy += 1;
                         PLAYER.steps -= 1;
                     }
+                }
                     break;
                 case "KeyD": //RIGHT
                     if (!boxCollisionLeft && PLAYER.fx < 9 && _fieldCollision(PLAYER.fx + 1, PLAYER.fy)) {
                         PLAYER.x += PLAYER.speedx;
                         PLAYER.steps -= 1;
                         PLAYER.fx += 1;
-                    } else if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9) {
+                    } else for (let i = 0; i < 4; i++) { 
+                        if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9) {
                         BOXES[i].x += 50;
                         BOXES[i].fx += 1;
                         PLAYER.steps -= 1;
                     }
+                }
                     break;
                 case "KeyR": //RESTART
                     console.log("RESTART");
@@ -348,18 +406,17 @@ function _onCanvasKeyDown(event) {
     if (PLAYER.steps === 0) {
         _draw();
     }
-}
-
 function _restart() {
-    for (let i = 0; i < 4; i++) {
+    
         PLAYER.x = PLAYER.x0;
         PLAYER.y = PLAYER.y0;
         PLAYER.steps = PLAYER.steps0;
         PLAYER.fx = 2;
         PLAYER.fy = 7;
+        for (i = 0; i < 4; i++) {
         BOXES[i].x = BOXES[i].x0;
         BOXES[i].y = BOXES[i].y0;
-        BOXES[i].fx = 4;
-        BOXES[i].fy = 5;
+        BOXES[i].fx = BOXES[i].fx0;
+        BOXES[i].fy = BOXES[i].fy0;
     }
 }
