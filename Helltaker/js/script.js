@@ -286,6 +286,7 @@ function sleep(millis) {
     }
 }
 
+/*
 function _boxCollisionDown(i, plr) {
     if (plr.y + 27 === BOXES[i].y + BOXES[i].size && plr.x + 10 === BOXES[i].x){
         return true
@@ -310,16 +311,68 @@ function _boxCollisionRight(i, plr) {
     } else return false
 }
 
-function _boxCollision(PLAYER) {
-    var boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER),
-        boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER),
-        boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER),
-        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER);  
-        
-    if (boxCollisionDown || boxCollisionLeft || boxCollisionRight || boxCollisionUp){
+*/
+
+function _boxCollisionDown(i, plr) {
+    if (plr.fy === BOXES[i].fy + 1 && plr.fx === BOXES[i].fx){
         return true
     } else return false
 }
+
+function _boxCollisionUp(i, plr) {
+    if (plr.fy === BOXES[i].fy - 1 && plr.fx === BOXES[i].fx){
+        return true
+    } else return false
+}
+
+function _boxCollisionLeft(i, plr) {
+    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx - 1){
+        return true
+    } else return false
+}
+
+function _boxCollisionRight(i, plr) {
+    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx + 1){
+        return true
+    } else return false
+}
+
+function _Collision(a, b) {
+
+}
+
+function _boxCollisionD(PLAYER) {
+    var boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER); 
+        
+    if (boxCollisionDown) {
+        return true
+    } else return false
+}
+
+function _boxCollisionU(PLAYER) {
+    var boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER); 
+        
+    if (boxCollisionUp) {
+        return true
+    } else return false
+}
+
+function _boxCollisionL(PLAYER) {
+    var boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER); 
+        
+    if (boxCollisionLeft) {
+        return true
+    } else return false
+}
+
+function _boxCollisionR(PLAYER) {
+    var boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER); 
+        
+    if (boxCollisionRight) {
+        return true
+    } else return false
+}
+
 function _onCanvasKeyDown(event) {
         var i = 0,
         boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER),
@@ -335,7 +388,7 @@ function _onCanvasKeyDown(event) {
                         PLAYER.steps -= 1;
                         PLAYER.fy -= 1;
                     } else for (let i = 0; i < 4; i++) {
-                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1)) {
+                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1) && !_boxCollisionD(BOXES[i])) {
                         BOXES[i].y -= 50;
                         BOXES[i].fy -= 1;
                         PLAYER.steps -= 1;
@@ -348,7 +401,7 @@ function _onCanvasKeyDown(event) {
                         PLAYER.steps -= 1;
                         PLAYER.fx -= 1;
                     } else for (let i = 0; i < 4; i++) { 
-                    if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1) {
+                    if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
                         BOXES[i].x -= 50;
                         BOXES[i].fx -= 1;
                         PLAYER.steps -= 1;
@@ -361,7 +414,7 @@ function _onCanvasKeyDown(event) {
                         PLAYER.steps -= 1;
                         PLAYER.fy += 1;
                     } else for (let i = 0; i < 4; i++) { 
-                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7) {
+                        if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i])) {
                         BOXES[i].y += 50;
                         BOXES[i].fy += 1;
                         PLAYER.steps -= 1;
@@ -374,7 +427,7 @@ function _onCanvasKeyDown(event) {
                         PLAYER.steps -= 1;
                         PLAYER.fx += 1;
                     } else for (let i = 0; i < 4; i++) { 
-                        if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9) {
+                        if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i])) {
                         BOXES[i].x += 50;
                         BOXES[i].fx += 1;
                         PLAYER.steps -= 1;
@@ -406,6 +459,8 @@ function _onCanvasKeyDown(event) {
     if (PLAYER.steps === 0) {
         _draw();
     }
+
+
 function _restart() {
     
         PLAYER.x = PLAYER.x0;
