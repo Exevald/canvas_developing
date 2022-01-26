@@ -21,8 +21,7 @@ var PLAYER = {
     speedy: 50,
 }
 
-var BOXES = [
-    {
+var BOXES = [{
         x: 325,
         y: 447,
         x0: 325,
@@ -44,7 +43,7 @@ var BOXES = [
         fy: 5,
         fy0: 5,
         block: null,
-        size: 50, 
+        size: 50,
     },
     {
         x: 375,
@@ -113,21 +112,21 @@ function _init() { //Главная функция
     chest.src = 'img/chest.png';
     cerberus.src = 'img/Cerberus.png';
 
-    background.onload = function () {
+    background.onload = function() {
         GAME.background = background;
     }
-    hero.onload = function () {
+    hero.onload = function() {
         PLAYER.hero = hero;
     }
-    block.onload = function () {
+    block.onload = function() {
         for (i = 0; i < 4; i++)
-        BOXES[i].block = block;
-        
+            BOXES[i].block = block;
+
     }
-    chest.onload = function () {
+    chest.onload = function() {
         GOLD.chest = chest;
     }
-    cerberus.onload = function () {
+    cerberus.onload = function() {
         ADVICE.cerberus = cerberus;
     }
 
@@ -151,7 +150,7 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
-    for (i = 0; i < 4; i++){
+    for (i = 0; i < 4; i++) {
         _drawBlock(i);
     }
     _drawChest();
@@ -183,7 +182,7 @@ function _drawHero() { //Рисуем игрока
 
 function _drawBlock(num) { //Рисуем блоки
 
-    if (BOXES[num].block){
+    if (BOXES[num].block) {
         GAME.canvasContext.drawImage(BOXES[num].block, BOXES[num].x, BOXES[num].y, 45, 45);
         //BOX.block.onload;
         //GAME.canvasContext.fillRect(BOXES[num].x, BOXES[num].y, 45, 45);
@@ -286,53 +285,26 @@ function sleep(millis) {
     }
 }
 
-/*
 function _boxCollisionDown(i, plr) {
-    if (plr.y + 27 === BOXES[i].y + BOXES[i].size && plr.x + 10 === BOXES[i].x){
+    if (plr.fy === BOXES[i].fy + 1 && plr.fx === BOXES[i].fx) {
         return true
     } else return false
 }
 
 function _boxCollisionUp(i, plr) {
-    if (plr.y + plr.size + 27 === BOXES[i].y && plr.x + 10 === BOXES[i].x){
+    if (plr.fy === BOXES[i].fy - 1 && plr.fx === BOXES[i].fx) {
         return true
     } else return false
 }
 
 function _boxCollisionLeft(i, plr) {
-    if (plr.x + plr.size + 10 === BOXES[i].x && plr.y === BOXES[i].y - 27){
+    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx - 1) {
         return true
     } else return false
 }
 
 function _boxCollisionRight(i, plr) {
-    if (plr.x + 10 === BOXES[i].x + BOXES[i].size && plr.y === BOXES[i].y - 27){
-        return true
-    } else return false
-}
-
-*/
-
-function _boxCollisionDown(i, plr) {
-    if (plr.fy === BOXES[i].fy + 1 && plr.fx === BOXES[i].fx){
-        return true
-    } else return false
-}
-
-function _boxCollisionUp(i, plr) {
-    if (plr.fy === BOXES[i].fy - 1 && plr.fx === BOXES[i].fx){
-        return true
-    } else return false
-}
-
-function _boxCollisionLeft(i, plr) {
-    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx - 1){
-        return true
-    } else return false
-}
-
-function _boxCollisionRight(i, plr) {
-    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx + 1){
+    if (plr.fy === BOXES[i].fy && plr.fx === BOXES[i].fx + 1) {
         return true
     } else return false
 }
@@ -342,133 +314,137 @@ function _Collision(a, b) {
 }
 
 function _boxCollisionD(PLAYER) {
-    var boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER); 
-        
+    var boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER);
+
     if (boxCollisionDown) {
         return true
     } else return false
 }
 
 function _boxCollisionU(PLAYER) {
-    var boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER); 
-        
+    var boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER);
+
     if (boxCollisionUp) {
         return true
     } else return false
 }
 
 function _boxCollisionL(PLAYER) {
-    var boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER); 
-        
+    var boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER);
+
     if (boxCollisionLeft) {
         return true
     } else return false
 }
 
 function _boxCollisionR(PLAYER) {
-    var boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER); 
-        
+    var boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER);
+
     if (boxCollisionRight) {
         return true
     } else return false
 }
 
 function _onCanvasKeyDown(event) {
-        var i = 0,
+    var i = 0,
         boxCollisionDown = _boxCollisionDown(0, PLAYER) || _boxCollisionDown(1, PLAYER) || _boxCollisionDown(2, PLAYER) || _boxCollisionDown(3, PLAYER),
         boxCollisionUp = _boxCollisionUp(0, PLAYER) || _boxCollisionUp(1, PLAYER) || _boxCollisionUp(2, PLAYER) || _boxCollisionUp(3, PLAYER),
         boxCollisionRight = _boxCollisionRight(0, PLAYER) || _boxCollisionRight(1, PLAYER) || _boxCollisionRight(2, PLAYER) || _boxCollisionRight(3, PLAYER),
-        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER); 
+        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) || _boxCollisionLeft(1, PLAYER) || _boxCollisionLeft(2, PLAYER) || _boxCollisionLeft(3, PLAYER);
 
-        if (PLAYER.steps > 0) {
-            switch (event.code) {
-                case "KeyW": //UP
-                    if (!boxCollisionDown && PLAYER.fy > 1 && _fieldCollision(PLAYER.fx, PLAYER.fy - 1)) {
-                        PLAYER.y -= PLAYER.speedy;
-                        PLAYER.steps -= 1;
-                        PLAYER.fy -= 1;
-                    } else for (let i = 0; i < 4; i++) {
+    if (PLAYER.steps > 0) {
+        switch (event.code) {
+            case "KeyW": //UP
+                if (!boxCollisionDown && PLAYER.fy > 1 && _fieldCollision(PLAYER.fx, PLAYER.fy - 1)) {
+                    PLAYER.y -= PLAYER.speedy;
+                    PLAYER.steps -= 1;
+                    PLAYER.fy -= 1;
+                } else
+                    for (let i = 0; i < 4; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1) && !_boxCollisionD(BOXES[i])) {
-                        BOXES[i].y -= 50;
-                        BOXES[i].fy -= 1;
-                        PLAYER.steps -= 1;
+                            BOXES[i].y -= 50;
+                            BOXES[i].fy -= 1;
+                            PLAYER.steps -= 1;
+                        }
                     }
-                }
-                    break;
-                case "KeyA": //LEFT
-                    if (!boxCollisionRight && PLAYER.fx > 1 && _fieldCollision(PLAYER.fx - 1, PLAYER.fy)) {
-                        PLAYER.x -= PLAYER.speedx;
-                        PLAYER.steps -= 1;
-                        PLAYER.fx -= 1;
-                    } else for (let i = 0; i < 4; i++) { 
-                    if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
-                        BOXES[i].x -= 50;
-                        BOXES[i].fx -= 1;
-                        PLAYER.steps -= 1;
+                break;
+            case "KeyA": //LEFT
+                if (!boxCollisionRight && PLAYER.fx > 1 && _fieldCollision(PLAYER.fx - 1, PLAYER.fy)) {
+                    PLAYER.x -= PLAYER.speedx;
+                    PLAYER.steps -= 1;
+                    PLAYER.fx -= 1;
+                } else
+                    for (let i = 0; i < 4; i++) {
+                        if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
+                            BOXES[i].x -= 50;
+                            BOXES[i].fx -= 1;
+                            PLAYER.steps -= 1;
+                        }
                     }
-                }
-                    break;
-                case "KeyS": //DOWN
-                    if (!boxCollisionUp && PLAYER.fy < 7 && _fieldCollision(PLAYER.fx, PLAYER.fy + 1)) {
-                        PLAYER.y += PLAYER.speedy;
-                        PLAYER.steps -= 1;
-                        PLAYER.fy += 1;
-                    } else for (let i = 0; i < 4; i++) { 
+                break;
+            case "KeyS": //DOWN
+                if (!boxCollisionUp && PLAYER.fy < 7 && _fieldCollision(PLAYER.fx, PLAYER.fy + 1)) {
+                    PLAYER.y += PLAYER.speedy;
+                    PLAYER.steps -= 1;
+                    PLAYER.fy += 1;
+                } else
+                    for (let i = 0; i < 4; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i])) {
-                        BOXES[i].y += 50;
-                        BOXES[i].fy += 1;
-                        PLAYER.steps -= 1;
+                            BOXES[i].y += 50;
+                            BOXES[i].fy += 1;
+                            PLAYER.steps -= 1;
+                        }
                     }
-                }
-                    break;
-                case "KeyD": //RIGHT
-                    if (!boxCollisionLeft && PLAYER.fx < 9 && _fieldCollision(PLAYER.fx + 1, PLAYER.fy)) {
-                        PLAYER.x += PLAYER.speedx;
-                        PLAYER.steps -= 1;
-                        PLAYER.fx += 1;
-                    } else for (let i = 0; i < 4; i++) { 
+                break;
+            case "KeyD": //RIGHT
+                if (!boxCollisionLeft && PLAYER.fx < 9 && _fieldCollision(PLAYER.fx + 1, PLAYER.fy)) {
+                    PLAYER.x += PLAYER.speedx;
+                    PLAYER.steps -= 1;
+                    PLAYER.fx += 1;
+                } else
+                    for (let i = 0; i < 4; i++) {
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i])) {
-                        BOXES[i].x += 50;
-                        BOXES[i].fx += 1;
-                        PLAYER.steps -= 1;
+                            BOXES[i].x += 50;
+                            BOXES[i].fx += 1;
+                            PLAYER.steps -= 1;
+                        }
                     }
-                }
-                    break;
-                case "KeyR": //RESTART
-                    console.log("RESTART");
-                    console.clear();
+                break;
+            case "KeyR": //RESTART
+                console.log("RESTART");
+                console.clear();
 
-                    //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
-                    _restart();
-
-                    break;
-                case "KeyH": //HELP
-                    console.log("HELP");
-                    if (Advice === 0)
-                        Advice = 1;
-                    else
-                        Advice = 0;
-                    break;
-            }
-        } else {
-            if (event.code === "KeyR") {
+                //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
                 _restart();
-            }
+
+                break;
+            case "KeyH": //HELP
+                console.log("HELP");
+                if (Advice === 0)
+                    Advice = 1;
+                else
+                    Advice = 0;
+                break;
+        }
+    } else {
+        if (event.code === "KeyR") {
+            _restart();
         }
     }
-    if (PLAYER.steps === 0) {
-        _draw();
-    }
+}
+if (PLAYER.steps === 0) {
+    _draw();
+}
 
 
 function _restart() {
-    
-        PLAYER.x = PLAYER.x0;
-        PLAYER.y = PLAYER.y0;
-        PLAYER.steps = PLAYER.steps0;
-        PLAYER.fx = 2;
-        PLAYER.fy = 7;
-        for (i = 0; i < 4; i++) {
+
+    PLAYER.x = PLAYER.x0;
+    PLAYER.y = PLAYER.y0;
+    PLAYER.steps = PLAYER.steps0;
+    PLAYER.fx = 2;
+    PLAYER.fy = 7;
+    for (i = 0; i < 4; i++) {
         BOXES[i].x = BOXES[i].x0;
         BOXES[i].y = BOXES[i].y0;
         BOXES[i].fx = BOXES[i].fx0;
