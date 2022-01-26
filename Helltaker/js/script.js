@@ -143,7 +143,7 @@ function _init() { //Главная функция
         PLAYER.hero = hero;
     }
     block.onload = function() {
-        for (i = 0; i < 6; i++)
+        for (i = 0; i < BOXES.length; i++)
             BOXES[i].block = block;
 
     }
@@ -174,7 +174,7 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < BOXES.length; i++) {
         _drawBlock(i);
     }
     _drawChest();
@@ -211,7 +211,7 @@ function _drawBlock(num) { //Рисуем блоки
         //BOX.block.onload;
         //GAME.canvasContext.fillRect(BOXES[num].x, BOXES[num].y, 45, 45);
     }
-    console.log("Рисуем блок", i);
+    //console.log("Рисуем блок", i);
 }
 
 function _drawChest() { //Рисуем сундук
@@ -338,7 +338,8 @@ function _Collision(a, b) {
 }
 
 function _boxCollisionD(PLAYER) {
-    var boxCollisionDown = _boxCollisionDown(0, PLAYER) ||
+    var boxCollisionDown =
+        _boxCollisionDown(0, PLAYER) ||
         _boxCollisionDown(1, PLAYER) ||
         _boxCollisionDown(2, PLAYER) ||
         _boxCollisionDown(3, PLAYER) ||
@@ -351,7 +352,8 @@ function _boxCollisionD(PLAYER) {
 }
 
 function _boxCollisionU(PLAYER) {
-    var boxCollisionUp = _boxCollisionUp(0, PLAYER) ||
+    var boxCollisionUp =
+        _boxCollisionUp(0, PLAYER) ||
         _boxCollisionUp(1, PLAYER) ||
         _boxCollisionUp(2, PLAYER) ||
         _boxCollisionUp(3, PLAYER) ||
@@ -364,7 +366,8 @@ function _boxCollisionU(PLAYER) {
 }
 
 function _boxCollisionL(PLAYER) {
-    var boxCollisionLeft = _boxCollisionLeft(0, PLAYER) ||
+    var boxCollisionLeft =
+        _boxCollisionLeft(0, PLAYER) ||
         _boxCollisionLeft(1, PLAYER) ||
         _boxCollisionLeft(2, PLAYER) ||
         _boxCollisionLeft(3, PLAYER) ||
@@ -377,7 +380,8 @@ function _boxCollisionL(PLAYER) {
 }
 
 function _boxCollisionR(PLAYER) {
-    var boxCollisionRight = _boxCollisionRight(0, PLAYER) ||
+    var boxCollisionRight =
+        _boxCollisionRight(0, PLAYER) ||
         _boxCollisionRight(1, PLAYER) ||
         _boxCollisionRight(2, PLAYER) ||
         _boxCollisionRight(3, PLAYER) ||
@@ -391,28 +395,32 @@ function _boxCollisionR(PLAYER) {
 
 function _onCanvasKeyDown(event) {
     var
-        boxCollisionDown = _boxCollisionDown(0, PLAYER) ||
+        boxCollisionDown =
+        _boxCollisionDown(0, PLAYER) ||
         _boxCollisionDown(1, PLAYER) ||
         _boxCollisionDown(2, PLAYER) ||
         _boxCollisionDown(3, PLAYER) ||
         _boxCollisionDown(4, PLAYER) ||
         _boxCollisionDown(5, PLAYER),
 
-        boxCollisionUp = _boxCollisionUp(0, PLAYER) ||
+        boxCollisionUp =
+        _boxCollisionUp(0, PLAYER) ||
         _boxCollisionUp(1, PLAYER) ||
         _boxCollisionUp(2, PLAYER) ||
         _boxCollisionUp(3, PLAYER) ||
         _boxCollisionUp(4, PLAYER) ||
         _boxCollisionUp(5, PLAYER),
 
-        boxCollisionRight = _boxCollisionRight(0, PLAYER) ||
+        boxCollisionRight =
+        _boxCollisionRight(0, PLAYER) ||
         _boxCollisionRight(1, PLAYER) ||
         _boxCollisionRight(2, PLAYER) ||
         _boxCollisionRight(3, PLAYER) ||
         _boxCollisionRight(4, PLAYER) ||
         _boxCollisionRight(5, PLAYER),
 
-        boxCollisionLeft = _boxCollisionLeft(0, PLAYER) ||
+        boxCollisionLeft =
+        _boxCollisionLeft(0, PLAYER) ||
         _boxCollisionLeft(1, PLAYER) ||
         _boxCollisionLeft(2, PLAYER) ||
         _boxCollisionLeft(3, PLAYER) ||
@@ -427,7 +435,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
                 } else
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1) && !_boxCollisionD(BOXES[i])) {
                             BOXES[i].y -= 50;
                             BOXES[i].fy -= 1;
@@ -441,7 +449,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
                 } else
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
                             BOXES[i].x -= 50;
                             BOXES[i].fx -= 1;
@@ -455,7 +463,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
                 } else
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i])) {
                             BOXES[i].y += 50;
                             BOXES[i].fy += 1;
@@ -469,7 +477,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
                 } else
-                    for (let i = 0; i < 6; i++) {
+                    for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i])) {
                             BOXES[i].x += 50;
                             BOXES[i].fx += 1;
@@ -511,7 +519,7 @@ function _restart() {
     PLAYER.steps = PLAYER.steps0;
     PLAYER.fx = 2;
     PLAYER.fy = 7;
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < BOXES.length; i++) {
         BOXES[i].x = BOXES[i].x0;
         BOXES[i].y = BOXES[i].y0;
         BOXES[i].fx = BOXES[i].fx0;
