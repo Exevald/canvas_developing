@@ -68,7 +68,19 @@ var BOXES = [{
         fy0: 6,
         block: null,
         size: 50,
-    }
+    },
+    {
+        x: 325,
+        y: 297,
+        x0: 325,
+        y0: 297,
+        fx: 2,
+        fx0: 2,
+        fy: 3,
+        fy0: 3,
+        block: null,
+        size: 50,
+    },
 ]
 
 var GOLD = {
@@ -119,7 +131,7 @@ function _init() { //Главная функция
         PLAYER.hero = hero;
     }
     block.onload = function() {
-        for (i = 0; i < 4; i++)
+        for (i = 0; i < 5; i++)
             BOXES[i].block = block;
 
     }
@@ -150,7 +162,7 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
 
     _drawBackground();
-    for (i = 0; i < 4; i++) {
+    for (i = 0; i < 5; i++) {
         _drawBlock(i);
     }
     _drawChest();
@@ -360,7 +372,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
                 } else
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < 5; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1) && !_boxCollisionD(BOXES[i])) {
                             BOXES[i].y -= 50;
                             BOXES[i].fy -= 1;
@@ -374,7 +386,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
                 } else
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < 5; i++) {
                         if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
                             BOXES[i].x -= 50;
                             BOXES[i].fx -= 1;
@@ -388,7 +400,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
                 } else
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < 5; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i])) {
                             BOXES[i].y += 50;
                             BOXES[i].fy += 1;
@@ -402,7 +414,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
                 } else
-                    for (let i = 0; i < 4; i++) {
+                    for (let i = 0; i < 5; i++) {
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i])) {
                             BOXES[i].x += 50;
                             BOXES[i].fx += 1;
