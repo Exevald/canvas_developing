@@ -130,14 +130,86 @@ var BOXES = [{
         size: 50,
     },
     {
-        x: 525, //9
-        y: 247,
-        x0: 525,
-        y0: 247,
+        x: 425, //9
+        y: 347,
+        x0: 425,
+        y0: 347,
         fx: 4,
         fx0: 4,
-        fy: 3,
-        fy0: 3,
+        fy: 4,
+        fy0: 4,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 475, //10
+        y: 347,
+        x0: 475,
+        y0: 347,
+        fx: 5,
+        fx0: 5,
+        fy: 4,
+        fy0: 4,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 525, //11
+        y: 347,
+        x0: 525,
+        y0: 347,
+        fx: 6,
+        fx0: 6,
+        fy: 4,
+        fy0: 4,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 575, //12
+        y: 447,
+        x0: 575,
+        y0: 447,
+        fx: 7,
+        fx0: 7,
+        fy: 6,
+        fy0: 6,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 625, //13
+        y: 447,
+        x0: 525,
+        y0: 447,
+        fx: 8,
+        fx0: 8,
+        fy: 6,
+        fy0: 6,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 575, //14
+        y: 497,
+        x0: 575,
+        y0: 497,
+        fx: 7,
+        fx0: 7,
+        fy: 7,
+        fy0: 7,
+        block: null,
+        size: 50,
+    },
+    {
+        x: 425, //15
+        y: 497,
+        x0: 425,
+        y0: 497,
+        fx: 4,
+        fx0: 4,
+        fy: 7,
+        fy0: 7,
         block: null,
         size: 50,
     },
@@ -392,7 +464,11 @@ function _boxCollisionD(PLAYER) {
         _boxCollisionDown(2, PLAYER) ||
         _boxCollisionDown(3, PLAYER) ||
         _boxCollisionDown(4, PLAYER) ||
-        _boxCollisionDown(5, PLAYER);
+        _boxCollisionDown(5, PLAYER) ||
+        _boxCollisionDown(6, PLAYER) ||
+        _boxCollisionDown(7, PLAYER) ||
+        _boxCollisionDown(8, PLAYER) ||
+        _boxCollisionDown(9, PLAYER);
 
     if (boxCollisionDown) {
         return true
@@ -406,7 +482,11 @@ function _boxCollisionU(PLAYER) {
         _boxCollisionUp(2, PLAYER) ||
         _boxCollisionUp(3, PLAYER) ||
         _boxCollisionUp(4, PLAYER) ||
-        _boxCollisionUp(5, PLAYER);
+        _boxCollisionUp(5, PLAYER) ||
+        _boxCollisionUp(6, PLAYER) ||
+        _boxCollisionUp(7, PLAYER) ||
+        _boxCollisionUp(8, PLAYER) ||
+        _boxCollisionUp(9, PLAYER);
 
     if (boxCollisionUp) {
         return true
@@ -420,7 +500,11 @@ function _boxCollisionL(PLAYER) {
         _boxCollisionLeft(2, PLAYER) ||
         _boxCollisionLeft(3, PLAYER) ||
         _boxCollisionLeft(4, PLAYER) ||
-        _boxCollisionLeft(5, PLAYER);
+        _boxCollisionLeft(5, PLAYER) ||
+        _boxCollisionLeft(6, PLAYER) ||
+        _boxCollisionLeft(7, PLAYER) ||
+        _boxCollisionLeft(8, PLAYER) ||
+        _boxCollisionLeft(9, PLAYER);
 
     if (boxCollisionLeft) {
         return true
@@ -558,7 +642,6 @@ function _onCanvasKeyDown(event) {
 if (PLAYER.steps === 0) {
     _draw();
 }
-
 
 function _restart() {
 
