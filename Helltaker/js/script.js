@@ -453,10 +453,6 @@ function _boxCollisionRight(i, plr) {
     } else return false
 }
 
-function _Collision(a, b) {
-
-}
-
 function _boxCollisionD(PLAYER) {
     var boxCollisionDown =
         _boxCollisionDown(0, PLAYER) ||
