@@ -180,7 +180,7 @@ var BOXES = [{
     {
         x: 625, //13
         y: 447,
-        x0: 525,
+        x0: 625,
         y0: 447,
         fx: 8,
         fx0: 8,
@@ -250,11 +250,11 @@ function _init() { //Главная функция
         chest = new Image(),
         cerberus = new Image();
 
-    background.src = 'img/bg.png';
-    hero.src = 'img/hero.png';
-    block.src = 'img/block.png';
-    chest.src = 'img/chest.png';
-    cerberus.src = 'img/Cerberus.png';
+    background.src = 'src/img/bg.png';
+    hero.src = 'src/img/hero.png';
+    block.src = 'src/img/block.png';
+    chest.src = 'src/img/chest.png';
+    cerberus.src = 'src/img/Cerberus.png';
 
     background.onload = function() {
         GAME.background = background;
