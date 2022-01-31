@@ -453,36 +453,43 @@ function _boxCollisionRight(i, plr) {
     } else return false
 }
 
+function _Collision(a, b) {
+
+}
+
 function _boxCollisionD(PLAYER) {
     var boxCollisionDown =
-        _boxCollisionDown(0, PLAYER) ||
-        _boxCollisionDown(1, PLAYER) ||
-        _boxCollisionDown(2, PLAYER) ||
-        _boxCollisionDown(3, PLAYER) ||
-        _boxCollisionDown(4, PLAYER) ||
-        _boxCollisionDown(5, PLAYER) ||
-        _boxCollisionDown(6, PLAYER) ||
-        _boxCollisionDown(7, PLAYER) ||
-        _boxCollisionDown(8, PLAYER) ||
-        _boxCollisionDown(9, PLAYER);
+        _boxCollisionDown(0, PLAYER);
+
+    for (let i = 1; i < BOXES.length; i++) {
+        boxCollisionDown = boxCollisionDown || _boxCollisionDown(i, PLAYER);
+    }
 
     if (boxCollisionDown) {
         return true
     } else return false
 }
 
+function _boxCollisionR(PLAYER) {
+    var boxCollisionRight =
+        _boxCollisionRight(0, PLAYER);
+
+    for (let i = 1; i < BOXES.length; i++) {
+        boxCollisionRight = boxCollisionRight || _boxCollisionRight(i, PLAYER);
+    }
+
+    if (boxCollisionRight) {
+        return true
+    } else return false
+}
+
 function _boxCollisionU(PLAYER) {
     var boxCollisionUp =
-        _boxCollisionUp(0, PLAYER) ||
-        _boxCollisionUp(1, PLAYER) ||
-        _boxCollisionUp(2, PLAYER) ||
-        _boxCollisionUp(3, PLAYER) ||
-        _boxCollisionUp(4, PLAYER) ||
-        _boxCollisionUp(5, PLAYER) ||
-        _boxCollisionUp(6, PLAYER) ||
-        _boxCollisionUp(7, PLAYER) ||
-        _boxCollisionUp(8, PLAYER) ||
-        _boxCollisionUp(9, PLAYER);
+        _boxCollisionUp(0, PLAYER);
+
+    for (let i = 1; i < BOXES.length; i++) {
+        boxCollisionUp = boxCollisionUp || _boxCollisionUp(i, PLAYER);
+    }
 
     if (boxCollisionUp) {
         return true
@@ -491,69 +498,23 @@ function _boxCollisionU(PLAYER) {
 
 function _boxCollisionL(PLAYER) {
     var boxCollisionLeft =
-        _boxCollisionLeft(0, PLAYER) ||
-        _boxCollisionLeft(1, PLAYER) ||
-        _boxCollisionLeft(2, PLAYER) ||
-        _boxCollisionLeft(3, PLAYER) ||
-        _boxCollisionLeft(4, PLAYER) ||
-        _boxCollisionLeft(5, PLAYER) ||
-        _boxCollisionLeft(6, PLAYER) ||
-        _boxCollisionLeft(7, PLAYER) ||
-        _boxCollisionLeft(8, PLAYER) ||
-        _boxCollisionLeft(9, PLAYER);
+        _boxCollisionLeft(0, PLAYER);
+
+    for (let i = 1; i < BOXES.length; i++) {
+        boxCollisionLeft = boxCollisionLeft || _boxCollisionLeft(i, PLAYER);
+    }
 
     if (boxCollisionLeft) {
         return true
     } else return false
 }
 
-function _boxCollisionR(PLAYER) {
-    var boxCollisionRight =
-        _boxCollisionRight(0, PLAYER) ||
-        _boxCollisionRight(1, PLAYER) ||
-        _boxCollisionRight(2, PLAYER) ||
-        _boxCollisionRight(3, PLAYER) ||
-        _boxCollisionRight(4, PLAYER) ||
-        _boxCollisionRight(5, PLAYER);
-
-    if (boxCollisionRight) {
-        return true
-    } else return false
-}
 
 function _onCanvasKeyDown(event) {
-    var
-        boxCollisionDown =
-        _boxCollisionDown(0, PLAYER) ||
-        _boxCollisionDown(1, PLAYER) ||
-        _boxCollisionDown(2, PLAYER) ||
-        _boxCollisionDown(3, PLAYER) ||
-        _boxCollisionDown(4, PLAYER) ||
-        _boxCollisionDown(5, PLAYER),
-
-        boxCollisionUp =
-        _boxCollisionUp(0, PLAYER) ||
-        _boxCollisionUp(1, PLAYER) ||
-        _boxCollisionUp(2, PLAYER) ||
-        _boxCollisionUp(3, PLAYER) ||
-        _boxCollisionUp(4, PLAYER) ||
-        _boxCollisionUp(5, PLAYER),
-
-        boxCollisionRight =
-        _boxCollisionRight(0, PLAYER) ||
-        _boxCollisionRight(1, PLAYER) ||
-        _boxCollisionRight(2, PLAYER) ||
-        _boxCollisionRight(3, PLAYER) ||
-        _boxCollisionRight(4, PLAYER) ||
-        _boxCollisionRight(5, PLAYER),
-
-        boxCollisionLeft =
-        _boxCollisionLeft(0, PLAYER) ||
-        _boxCollisionLeft(1, PLAYER) ||
-        _boxCollisionLeft(2, PLAYER) ||
-        _boxCollisionLeft(3, PLAYER) ||
-        _boxCollisionLeft(4, PLAYER) ||
-        _boxCollisionLeft(5, PLAYER)
+    var boxCollisionDown = _boxCollisionD(PLAYER),
+        boxCollisionUp = _boxCollisionU(PLAYER),
+        boxCollisionLeft = _boxCollisionL(PLAYER),
+        boxCollisionRight = _boxCollisionR(PLAYER);
 
     if (PLAYER.steps > 0) {
         switch (event.code) {
