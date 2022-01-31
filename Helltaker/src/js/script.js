@@ -328,8 +328,6 @@ function _drawBlock(num) { //Рисуем блоки
 
     if (BOXES[num].block) {
         GAME.canvasContext.drawImage(BOXES[num].block, BOXES[num].x, BOXES[num].y, 45, 45);
-        //BOX.block.onload;
-        //GAME.canvasContext.fillRect(BOXES[num].x, BOXES[num].y, 45, 45);
     }
     //console.log("Рисуем блок", i);
 }
@@ -363,7 +361,6 @@ function _drawAdvice() {
     const context = canvas.getContext('2d');
 
     context.fillStyle = "rgba(2, 2, 27, 1)";
-    // context.fillStyle = "white";
     context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
 
     if (ADVICE.cerberus)
@@ -401,7 +398,6 @@ function _lose() {
     const context = canvas.getContext('2d');
 
     context.fillStyle = "rgba(2, 2, 27, 1)";
-    // context.fillStyle = "white";
     context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
 
     if (ADVICE.cerberus)
