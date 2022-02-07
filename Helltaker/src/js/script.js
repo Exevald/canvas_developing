@@ -1,11 +1,11 @@
-var GAME = {
+let GAME = {
     width: 1000,
     height: 650,
     canvasContext: null,
     background: null,
 }
 
-var PLAYER = {
+let PLAYER = {
     x0: 315,
     y0: 470,
     x: 315,
@@ -21,7 +21,7 @@ var PLAYER = {
     speedy: 50,
 }
 
-var BOXES = [{
+let BOXES = [{
         x: 325, //0
         y: 447,
         x0: 325,
@@ -222,7 +222,7 @@ var GOLD = {
     size: 50,
 }
 
-var ADVICE = {
+let ADVICE = {
     x: 200,
     y: 0,
     width0: 970,
@@ -231,14 +231,14 @@ var ADVICE = {
     height: 395,
     cerberus: null,
 }
-var LOSE = {
+let LOSE = {
     x: 250,
     y: 0,
 }
 
-var Advice = 0;
+let Advice = 0;
 
-var i = 0;
+let i = 0;
 
 function _init() { //Главная функция
 
