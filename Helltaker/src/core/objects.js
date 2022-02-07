@@ -1,11 +1,11 @@
-var GAME = {
+let GAME = {
     width: 1000,
     height: 650,
     canvasContext: null,
     background: null,
 }
 
-var PLAYER = {
+let PLAYER = {
     x0: 315,
     y0: 470,
     x: 315,
@@ -21,18 +21,18 @@ var PLAYER = {
     speedy: 50,
 }
 
-var BOXES = [{
-        x: 325, //0
-        y: 447,
-        x0: 325,
-        y0: 447,
-        fx: 2,
-        fx0: 2,
-        fy: 6,
-        fy0: 6,
-        block: null,
-        size: 50,
-    },
+let BOXES = [{
+    x: 325, //0
+    y: 447,
+    x0: 325,
+    y0: 447,
+    fx: 2,
+    fx0: 2,
+    fy: 6,
+    fy0: 6,
+    block: null,
+    size: 50,
+},
     {
         x: 425, //1
         y: 397,
@@ -215,14 +215,14 @@ var BOXES = [{
     },
 ]
 
-var GOLD = {
+let GOLD = {
     x: 475,
     y: 247,
     chest: null,
     size: 50,
 }
 
-var ADVICE = {
+let ADVICE = {
     x: 200,
     y: 0,
     width0: 970,
@@ -231,7 +231,9 @@ var ADVICE = {
     height: 395,
     cerberus: null,
 }
-var LOSE = {
+let LOSE = {
     x: 250,
     y: 0,
 }
+
+let Advice = 0;
