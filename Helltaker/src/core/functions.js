@@ -17,7 +17,6 @@ function _draw() {
         _drawBlock(i);
     }
     _drawChest();
-    _drawKey();
     _drawHero();
     _drawText();
     if (Advice === 1)
@@ -55,11 +54,6 @@ function _drawBlock(num) { //Рисуем блоки
 function _drawChest() { //Рисуем сундук
     if (GOLD.chest)
         GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y, GOLD.size, GOLD.size);
-}
-
-function _drawKey() { //Рисуем ключ
-    if (KEY.goldy)
-        GAME.canvasContext.drawImage(KEY.goldy, KEY.x, KEY.y, KEY.size, KEY.size);
 }
 
 function _drawText() { //Выводим текст
@@ -201,23 +195,13 @@ function _boxCollisionL(PLAYER) {
 
     return !!boxCollisionLeft;
 }
-function _ifKeyTaken() {
-    if (PLAYER.fx === KEY.fx && PLAYER.fy === KEY.fy && KEY.taken === false) {
-        return true;
 
-        console.log("taking a key");
-    } else if (KEY.taken === true) {
-        return true;
-        console.log("key already taken");
-    } else console.log("step")
-}
 
 function _onCanvasKeyDown(event) {
     let boxCollisionDown = _boxCollisionD(PLAYER),
         boxCollisionUp = _boxCollisionU(PLAYER),
         boxCollisionLeft = _boxCollisionL(PLAYER),
         boxCollisionRight = _boxCollisionR(PLAYER);
-
 
     if (PLAYER.steps > 0) {
         switch (event.code) {
@@ -226,7 +210,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.y -= PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
-                    _ifKeyTaken();
                 } else
                     for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy - 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy - 1) && !_boxCollisionD(BOXES[i])) {
@@ -241,7 +224,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.x -= PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
-                    _ifKeyTaken();
                 } else
                     for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx - 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx - 1, BOXES[i].fy) && BOXES[i].fx > 1 && !_boxCollisionR(BOXES[i])) {
@@ -256,7 +238,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.y += PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
-                    _ifKeyTaken();
                 } else
                     for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCollision(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i])) {
@@ -271,7 +252,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.x += PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
-                    _ifKeyTaken();
                 } else
                     for (let i = 0; i < BOXES.length; i++) {
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCollision(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i])) {
