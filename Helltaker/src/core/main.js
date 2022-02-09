@@ -6,13 +6,15 @@ function _init() { //Главная функция
         hero = new Image(),
         block = new Image(),
         chest = new Image(),
-        cerberus = new Image();
+        cerberus = new Image(),
+        goldy = new Image();
 
     background.src = 'src/img/bg.png';
     hero.src = 'src/img/hero.png';
     block.src = 'src/img/block.png';
     chest.src = 'src/img/chest.png';
     cerberus.src = 'src/img/Cerberus.png';
+    goldy.src = 'src/img/key.png';
 
     background.onload = function() {
         GAME.background = background;
@@ -30,6 +32,9 @@ function _init() { //Главная функция
     }
     cerberus.onload = function() {
         ADVICE.cerberus = cerberus;
+    }
+    goldy.onload = function() {
+        KEY.goldy = goldy;
     }
 
     _initCanvas(canvas);

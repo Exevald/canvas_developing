@@ -19,6 +19,7 @@ let PLAYER = {
     steps: 33,
     speedx: 50,
     speedy: 50,
+    keyTaken: false,
 }
 
 let BOXES = [{
@@ -237,3 +238,13 @@ let LOSE = {
 }
 
 let Advice = 0;
+
+let KEY = {
+    x: 680,
+    y: 390,
+    fx: 9,
+    fy: 5,
+    goldy: null,
+    size: 50,
+    taken: false,
+}
