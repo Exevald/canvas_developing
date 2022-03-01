@@ -37,7 +37,7 @@ function _init() { //Главная функция
         KEY.goldy = goldy;
     }
 
-    _initCanvas(canvas);
+    _initCANVAS(canvas);
     _initEventsListeners();
     _main();
 }
