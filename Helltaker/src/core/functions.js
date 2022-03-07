@@ -327,7 +327,6 @@ if (PLAYER.steps === 0)
 }
 
 function _restart() {
-
     PLAYER.x = PLAYER.x0;
     PLAYER.y = PLAYER.y0;
     PLAYER.steps = PLAYER.steps0;
