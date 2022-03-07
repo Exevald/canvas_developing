@@ -16,18 +16,16 @@ function _draw() {
     let EndFlag = GAME.win;
 
     _drawBACKGROUND();
-    for (let i = 0; i < BOXES.length; i++) {
+    for (let i = 0; i < BOXES.length; i++)
         _drawBLOCK(i);
-    }
     _drawCHEST(GoldFlag);
     _drawKEY(KeyFlag);
     _drawHERO();
     _drawTEXT();
     if (Advice === 1)
         _drawADVICE();
-    if (PLAYER.steps === 0) {
+    if (PLAYER.steps === 0)
         _drawLOSE();
-    }
     _drawWIN(EndFlag);
 }
 
@@ -39,11 +37,9 @@ function _drawBACKGROUND() { //Рисуем фон
 function _drawHERO() { //Рисуем игрока
     if (PLAYER.hero)
         GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
-    if (PLAYER.sprite < 11) {
+    if (PLAYER.sprite < 11)
         PLAYER.sprite++
-    } else {
-        PLAYER.sprite = 1
-    }
+    else PLAYER.sprite = 1
     sleep(75);
 }
 
@@ -190,7 +186,7 @@ function _boxCollisionD(PLAYER) {
         boxCollisionDown = boxCollisionDown || _boxCollisionDown(i, PLAYER);
     }
 
-    return !!boxCollisionDown;
+    return boxCollisionDown;
 }
 
 function _boxCollisionR(PLAYER) {
@@ -201,7 +197,7 @@ function _boxCollisionR(PLAYER) {
         boxCollisionRight = boxCollisionRight || _boxCollisionRight(i, PLAYER);
     }
 
-    return !!boxCollisionRight;
+    return boxCollisionRight;
 }
 
 function _boxCollisionU(PLAYER) {
@@ -212,18 +208,16 @@ function _boxCollisionU(PLAYER) {
         boxCollisionUp = boxCollisionUp || _boxCollisionUp(i, PLAYER);
     }
 
-    return !!boxCollisionUp;
+    return boxCollisionUp;
 }
 
 function _boxCollisionL(PLAYER) {
     let boxCollisionLeft =
         _boxCollisionLeft(0, PLAYER);
-
     for (let i = 1; i < BOXES.length; i++) {
         boxCollisionLeft = boxCollisionLeft || _boxCollisionLeft(i, PLAYER);
     }
-
-    return !!boxCollisionLeft;
+    return boxCollisionLeft;
 }
 function _ifKeyTaken() {
     let keyPosition = PLAYER.fx === KEY.fx && PLAYER.fy === KEY.fy;
@@ -234,7 +228,6 @@ function _ifKeyTaken() {
 
     }
 }
-
 function _openChest() {
     let chestPosition = PLAYER.fx === GOLD.fx && PLAYER.fy === GOLD.fy;
     if (chestPosition && KEY.taken === true && GOLD.open === false)
@@ -342,17 +335,10 @@ function _onCanvasKeyDown(event) {
         _ifKeyTaken();
         _openChest();
         _winCHECK();
-    } else {
-        if (event.code === "KeyR")
-        {
-            _restart();
-        }
-    }
+    } else if (event.code === "KeyR") _restart();
 }
 if (PLAYER.steps === 0)
-{
     _draw();
-}
 
 function _restart() {
     PLAYER.x = PLAYER.x0;
