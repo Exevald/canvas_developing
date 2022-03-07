@@ -329,15 +329,11 @@ function _onCanvasKeyDown(event) {
                     }
                 break;
             case "KeyR": //RESTART
-                console.log("RESTART");
-                console.clear();
-
                 //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
                 _restart();
 
                 break;
             case "KeyH": //HELP
-                console.log("HELP");
                 if (Advice === 0)
                     Advice = 1;
                 else
