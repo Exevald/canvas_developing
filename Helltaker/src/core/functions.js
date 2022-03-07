@@ -229,33 +229,25 @@ function _ifKeyTaken() {
     let keyPosition = PLAYER.fx === KEY.fx && PLAYER.fy === KEY.fy;
     if (keyPosition && KEY.taken === false)
     {
-        console.log("taking a key");
         KEY.taken = true;
         KEY.draw = false;
 
-    } else if (keyPosition && KEY.taken === true)
-    {
-        console.log("key already taken");
-    } else console.log("step")
+    }
 }
 
 function _openChest() {
     let chestPosition = PLAYER.fx === GOLD.fx && PLAYER.fy === GOLD.fy;
     if (chestPosition && KEY.taken === true && GOLD.open === false)
     {
-        console.log("open chest");
         GOLD.draw = false;
         GOLD.open = true;
-    } else if (chestPosition && KEY.taken === true && GOLD.open === true)
-        console.log("chest is already open")
+    }
 }
 
 function _winCHECK() {
     let EndPosition = PLAYER.fx === END.fx && PLAYER.fy === END.fy;
-    if (EndPosition && GOLD.open) {
-        console.log("WIN!");
+    if (EndPosition && GOLD.open)
         GAME.win = true;
-    }
 }
 
 function _onCanvasKeyDown(event) {
