@@ -331,7 +331,6 @@ function _onCanvasKeyDown(event) {
             case "KeyR": //RESTART
                 //ОБНУЛЕНИЕ КООРДИНАТ И ШАГОВ
                 _restart();
-
                 break;
             case "KeyH": //HELP
                 if (Advice === 0)
