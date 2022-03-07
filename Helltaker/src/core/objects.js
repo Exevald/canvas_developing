@@ -16,8 +16,8 @@ let PLAYER = {
     size: 50,
     hero: null,
     sprite: 1,
-    steps0: 133,
-    steps: 133,
+    steps0: 33,
+    steps: 33,
     speedx: 50,
     speedy: 50,
     keyTaken: false,
@@ -61,13 +61,13 @@ let BOXES = [{
     },
     {
         x: 425, //3
-        y: 447,
+        y: 397,
         x0: 425,
-        y0: 447,
+        y0: 397,
         fx: 4,
         fx0: 4,
-        fy: 6,
-        fy0: 6,
+        fy: 5,
+        fy0: 5,
         block: null,
         size: 50,
     },
@@ -237,9 +237,16 @@ let ADVICE = {
     height: 395,
     cerberus: null,
 }
-let LOSE = {
+let STATUS_IMG = {
     x: 250,
     y: 0,
+}
+
+let WIN = {
+    width0: 950,
+    height0: 695,
+    width: 570,
+    height: 395,
 }
 
 let Advice = 0;
@@ -253,4 +260,9 @@ let KEY = {
     size: 50,
     taken: false,
     draw: true,
+}
+
+let END = {
+    fx: 5,
+    fy: 1,
 }

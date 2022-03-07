@@ -13,6 +13,7 @@ function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
     let KeyFlag = KEY.draw;
     let GoldFlag = GOLD.draw;
+    let EndFlag = GAME.win;
 
     _drawBACKGROUND();
     for (let i = 0; i < BOXES.length; i++) {
@@ -25,8 +26,9 @@ function _draw() {
     if (Advice === 1)
         _drawADVICE();
     if (PLAYER.steps === 0) {
-        _lose();
+        _drawLOSE();
     }
+    _drawWIN(EndFlag);
 }
 
 function _drawBACKGROUND() { //Рисуем фон
@@ -104,20 +106,27 @@ function _drawADVICE() {
 
 }
 
-function _fieldCOLLISION(fieldx, fieldy) {
-    return !((fieldx === 1 && fieldy === 7) || (fieldx === 9 && fieldy === 7) ||
-        (fieldx === 1 && fieldy === 4) || (fieldx === 1 && fieldy === 3) ||
-        (fieldx === 4 && fieldy === 1) || (fieldx === 6 && fieldy === 1) ||
-        (fieldx === 9 && fieldy === 4) || (fieldx === 9 && fieldy === 3) ||
-        (fieldx === 3 && fieldy === 2) || (fieldx === 7 && fieldy === 2) ||
-        (fieldx === 3 && fieldy === 4) || (fieldx === 3 && fieldy === 3) ||
-        (fieldx === 2 && fieldy === 2) || (fieldx === 8 && fieldy === 2) ||
-        (fieldx === 7 && fieldy === 4) || (fieldx === 7 && fieldy === 3) ||
-        (fieldx === 5 && fieldy === 0));
+function _drawWIN(flag) {
 
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+
+    if (flag === true) {
+
+        context.fillStyle = "rgba(2, 2, 27, 1)";
+        context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
+
+        if (ADVICE.cerberus)
+            GAME.canvasContext.drawImage(ADVICE.cerberus, WIN.width0, 0, WIN.width0, WIN.height0, STATUS_IMG.x, STATUS_IMG.y, WIN.width, WIN.height);
+
+        context.fillStyle = "white";
+        context.font = '30px Crimson Pro';
+        context.fillText("YOU WIN! CONGRATULATIONS!", 350, 450);
+        context.fillText("PRESS R TO RESTART", 412, 487);
+    }
 }
 
-function _lose() {
+function _drawLOSE() {
     const canvas = document.getElementById('canvas');
     const context = canvas.getContext('2d');
 
@@ -125,7 +134,7 @@ function _lose() {
     context.fillRect(ADVICE.x, 0, ADVICE.width, 650);
 
     if (ADVICE.cerberus)
-        GAME.canvasContext.drawImage(ADVICE.cerberus, ADVICE.width0 * 2, 0, ADVICE.width0, ADVICE.height0, LOSE.x, LOSE.y, ADVICE.width, ADVICE.height);
+        GAME.canvasContext.drawImage(ADVICE.cerberus, ADVICE.width0 * 2, 0, ADVICE.width0, ADVICE.height0, STATUS_IMG.x, STATUS_IMG.y, ADVICE.width, ADVICE.height);
 
     context.fillStyle = "white";
     context.font = '30px Crimson Pro';
@@ -143,6 +152,19 @@ function sleep(millis) {
     while (((new Date()).getTime() - t) < millis) {
         j++;
     }
+}
+
+function _fieldCOLLISION(fieldx, fieldy) {
+    return !((fieldx === 1 && fieldy === 7) || (fieldx === 9 && fieldy === 7) ||
+        (fieldx === 1 && fieldy === 4) || (fieldx === 1 && fieldy === 3) ||
+        (fieldx === 4 && fieldy === 1) || (fieldx === 6 && fieldy === 1) ||
+        (fieldx === 9 && fieldy === 4) || (fieldx === 9 && fieldy === 3) ||
+        (fieldx === 3 && fieldy === 2) || (fieldx === 7 && fieldy === 2) ||
+        (fieldx === 3 && fieldy === 4) || (fieldx === 3 && fieldy === 3) ||
+        (fieldx === 2 && fieldy === 2) || (fieldx === 8 && fieldy === 2) ||
+        (fieldx === 7 && fieldy === 4) || (fieldx === 7 && fieldy === 3) ||
+        (fieldx === 5 && fieldy === 0));
+
 }
 
 function _boxCollisionDown(i, plr) {
@@ -228,6 +250,14 @@ function _openChest() {
         console.log("chest is already open")
 }
 
+function _winCHECK() {
+    let EndPosition = PLAYER.fx === END.fx && PLAYER.fy === END.fy;
+    if (EndPosition && GOLD.open) {
+        console.log("WIN!");
+        GAME.win = true;
+    }
+}
+
 function _onCanvasKeyDown(event) {
     let boxCollisionDown = _boxCollisionD(PLAYER),
         boxCollisionUp = _boxCollisionU(PLAYER),
@@ -248,8 +278,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.y -= PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
-                    _ifKeyTaken();
-                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) //UP
                     {
@@ -266,8 +294,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.x -= PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
-                    _ifKeyTaken();
-                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) //LEFT
                     {
@@ -284,8 +310,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.y += PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
-                    _ifKeyTaken();
-                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) { //DOWN
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCOLLISION(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i]) && !chestCollisionDown)
@@ -302,8 +326,6 @@ function _onCanvasKeyDown(event) {
                     PLAYER.x += PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
-                    _ifKeyTaken();
-                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) { //RIGHT
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCOLLISION(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i]) && !chestCollisionRight)
@@ -330,6 +352,9 @@ function _onCanvasKeyDown(event) {
                     Advice = 0;
                 break;
         }
+        _ifKeyTaken();
+        _openChest();
+        _winCHECK();
     } else {
         if (event.code === "KeyR")
         {
@@ -359,4 +384,5 @@ function _restart() {
     KEY.draw = true;
     GOLD.open = false;
     GOLD.draw = true;
+    GAME.win = false;
 }
