@@ -11,21 +11,21 @@ function _main() {
 
 function _draw() {
     GAME.canvasContext.clearRect(0, 0, GAME.width, GAME.height);
+    let KeyFlag = KEY.draw;
+    let GoldFlag = GOLD.draw;
 
     _drawBACKGROUND();
     for (let i = 0; i < BOXES.length; i++) {
         _drawBLOCK(i);
     }
-    _drawCHEST();
-    let flag = KEY.draw;
-    _drawKEY(flag);
+    _drawCHEST(GoldFlag);
+    _drawKEY(KeyFlag);
     _drawHERO();
     _drawTEXT();
     if (Advice === 1)
         _drawADVICE();
     if (PLAYER.steps === 0) {
         _lose();
-
     }
 }
 
@@ -52,9 +52,10 @@ function _drawBLOCK(num) { //Рисуем блоки
     }
 }
 
-function _drawCHEST() { //Рисуем сундук
-    if (GOLD.chest)
-        GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y, GOLD.size, GOLD.size);
+function _drawCHEST(flag) { //Рисуем сундук
+    if (flag === true)
+        if (GOLD.chest)
+            GAME.canvasContext.drawImage(GOLD.chest, GOLD.x, GOLD.y, GOLD.size, GOLD.size);
 }
 
 function _drawKEY(flag) { //Рисуем ключ
@@ -216,6 +217,17 @@ function _ifKeyTaken() {
     } else console.log("step")
 }
 
+function _openChest() {
+    let chestPosition = PLAYER.fx === GOLD.fx && PLAYER.fy === GOLD.fy;
+    if (chestPosition && KEY.taken === true && GOLD.open === false)
+    {
+        console.log("open chest");
+        GOLD.draw = false;
+        GOLD.open = true;
+    } else if (chestPosition && KEY.taken === true && GOLD.open === true)
+        console.log("chest is already open")
+}
+
 function _onCanvasKeyDown(event) {
     let boxCollisionDown = _boxCollisionD(PLAYER),
         boxCollisionUp = _boxCollisionU(PLAYER),
@@ -237,6 +249,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
                     _ifKeyTaken();
+                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) //UP
                     {
@@ -254,6 +267,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
                     _ifKeyTaken();
+                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) //LEFT
                     {
@@ -271,6 +285,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
                     _ifKeyTaken();
+                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) { //DOWN
                         if (BOXES[i].fx === PLAYER.fx && BOXES[i].fy === PLAYER.fy + 1 && _fieldCOLLISION(BOXES[i].fx, BOXES[i].fy + 1) && BOXES[i].fy < 7 && !_boxCollisionU(BOXES[i]) && !chestCollisionDown)
@@ -288,6 +303,7 @@ function _onCanvasKeyDown(event) {
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
                     _ifKeyTaken();
+                    _openChest();
                 } else
                     for (let i = 0; i < BOXES.length; i++) { //RIGHT
                         if (BOXES[i].fx === PLAYER.fx + 1 && BOXES[i].fy === PLAYER.fy && _fieldCOLLISION(BOXES[i].fx + 1, BOXES[i].fy) && BOXES[i].fx < 9 && !_boxCollisionL(BOXES[i]) && !chestCollisionRight)
@@ -341,4 +357,6 @@ function _restart() {
     }
     KEY.taken = false;
     KEY.draw = true;
+    GOLD.open = false;
+    GOLD.draw = true;
 }

@@ -3,6 +3,7 @@ let GAME = {
     height: 650,
     canvasContext: null,
     background: null,
+    win: false,
 }
 
 let PLAYER = {
@@ -223,6 +224,8 @@ let GOLD = {
     fy: 2,
     chest: null,
     size: 50,
+    open: false,
+    draw: true,
 }
 
 let ADVICE = {
