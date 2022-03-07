@@ -202,14 +202,14 @@ function _boxCollisionL(PLAYER) {
     return !!boxCollisionLeft;
 }
 function _ifKeyTaken() {
-    if (PLAYER.fx === KEY.fx && PLAYER.fy === KEY.fy && KEY.taken === false)
+    let keyPosition = PLAYER.fx === KEY.fx && PLAYER.fy === KEY.fy;
+    if (keyPosition && KEY.taken === false)
     {
-        return true;
         console.log("taking a key");
+        KEY.taken = true;
 
-    } else if (KEY.taken === true)
+    } else if (keyPosition && KEY.taken === true)
     {
-        return true;
         console.log("key already taken");
     } else console.log("step")
 }

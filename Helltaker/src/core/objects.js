@@ -35,12 +35,12 @@ let BOXES = [{
     size: 50,
 },
     {
-        x: 425, //1
+        x: 475, //1
         y: 397,
-        x0: 425,
+        x0: 475,
         y0: 397,
-        fx: 4,
-        fx0: 4,
+        fx: 5,
+        fx0: 5,
         fy: 5,
         fy0: 5,
         block: null,
@@ -143,14 +143,14 @@ let BOXES = [{
         size: 50,
     },
     {
-        x: 475, //10
-        y: 347,
-        x0: 475,
-        y0: 347,
-        fx: 5,
-        fx0: 5,
-        fy: 4,
-        fy0: 4,
+        x: 575, //10
+        y: 397,
+        x0: 575,
+        y0: 397,
+        fx: 7,
+        fx0: 7,
+        fy: 5,
+        fy0: 5,
         block: null,
         size: 50,
     },
@@ -240,10 +240,10 @@ let LOSE = {
 let Advice = 0;
 
 let KEY = {
-    x: 680,
-    y: 390,
-    fx: 9,
-    fy: 5,
+    x: 625,
+    y: 347,
+    fx: 8,
+    fy: 4,
     goldy: null,
     size: 50,
     taken: false,
