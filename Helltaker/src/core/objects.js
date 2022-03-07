@@ -219,6 +219,8 @@ let BOXES = [{
 let GOLD = {
     x: 475,
     y: 247,
+    fx: 5,
+    fy: 2,
     chest: null,
     size: 50,
 }
@@ -247,4 +249,5 @@ let KEY = {
     goldy: null,
     size: 50,
     taken: false,
+    draw: true,
 }
