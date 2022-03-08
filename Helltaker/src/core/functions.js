@@ -46,7 +46,7 @@ function _drawHERO(flag) { //Рисуем игрока
     }
     else {
         if (PLAYER.hero)
-            GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 230, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
+            GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 220, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
         if (PLAYER.sprite < 11)
             PLAYER.sprite++
         else PLAYER.sprite = 1
@@ -378,4 +378,5 @@ function _restart() {
     GOLD.open = false;
     GOLD.draw = true;
     GAME.win = false;
+    PLAYER.strike = false;
 }
