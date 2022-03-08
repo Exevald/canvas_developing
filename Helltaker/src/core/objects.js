@@ -21,6 +21,7 @@ let PLAYER = {
     speedx: 50,
     speedy: 50,
     keyTaken: false,
+    strike: false,
 }
 
 let BOXES = [{

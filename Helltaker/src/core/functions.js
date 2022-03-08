@@ -14,13 +14,14 @@ function _draw() {
     let KeyFlag = KEY.draw;
     let GoldFlag = GOLD.draw;
     let EndFlag = GAME.win;
+    let StrikeFlag = PLAYER.strike;
 
     _drawBACKGROUND();
     for (let i = 0; i < BOXES.length; i++)
         _drawBLOCK(i);
     _drawCHEST(GoldFlag);
     _drawKEY(KeyFlag);
-    _drawHERO();
+    _drawHERO(StrikeFlag);
     _drawTEXT();
     if (Advice === 1)
         _drawADVICE();
@@ -34,13 +35,23 @@ function _drawBACKGROUND() { //Рисуем фон
         GAME.canvasContext.drawImage(GAME.background, 0, 0);
 }
 
-function _drawHERO() { //Рисуем игрока
-    if (PLAYER.hero)
-        GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
-    if (PLAYER.sprite < 11)
-        PLAYER.sprite++
-    else PLAYER.sprite = 1
-    sleep(75);
+function _drawHERO(flag) { //Рисуем игрока
+    if (flag === false) {
+        if (PLAYER.hero)
+            GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 0, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
+        if (PLAYER.sprite < 11)
+            PLAYER.sprite++
+        else PLAYER.sprite = 1
+        sleep(75);
+    }
+    else {
+        if (PLAYER.hero)
+            GAME.canvasContext.drawImage(PLAYER.hero, PLAYER.sprite * 100, 230, 100, 130, PLAYER.x, PLAYER.y, PLAYER.size + 10, PLAYER.size + 20);
+        if (PLAYER.sprite < 11)
+            PLAYER.sprite++
+        else PLAYER.sprite = 1
+        sleep(75);
+    }
 }
 
 function _drawBLOCK(num) { //Рисуем блоки
@@ -260,6 +271,7 @@ function _onCanvasKeyDown(event) {
             case "KeyW": //UP
                 if (!boxCollisionDown && PLAYER.fy > 1 && _fieldCOLLISION(PLAYER.fx, PLAYER.fy - 1))
                 {
+                    PLAYER.strike = false;
                     PLAYER.y -= PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy -= 1;
@@ -270,12 +282,14 @@ function _onCanvasKeyDown(event) {
                             BOXES[i].y -= 50;
                             BOXES[i].fy -= 1;
                             PLAYER.steps -= 1;
+                            PLAYER.strike = true;
                         }
                     }
                 break;
             case "KeyA": //LEFT
                 if (!boxCollisionRight && PLAYER.fx > 1 && _fieldCOLLISION(PLAYER.fx - 1, PLAYER.fy))
                 {
+                    PLAYER.strike = false;
                     PLAYER.x -= PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx -= 1;
@@ -286,12 +300,14 @@ function _onCanvasKeyDown(event) {
                             BOXES[i].x -= 50;
                             BOXES[i].fx -= 1;
                             PLAYER.steps -= 1;
+                            PLAYER.strike = true;
                         }
                     }
                 break;
             case "KeyS": //DOWN
                 if (!boxCollisionUp && PLAYER.fy < 7 && _fieldCOLLISION(PLAYER.fx, PLAYER.fy + 1))
                 {
+                    PLAYER.strike = false;
                     PLAYER.y += PLAYER.speedy;
                     PLAYER.steps -= 1;
                     PLAYER.fy += 1;
@@ -302,12 +318,14 @@ function _onCanvasKeyDown(event) {
                             BOXES[i].y += 50;
                             BOXES[i].fy += 1;
                             PLAYER.steps -= 1;
+                            PLAYER.strike = true;
                         }
                     }
                 break;
             case "KeyD": //RIGHT
                 if (!boxCollisionLeft && PLAYER.fx < 9 && _fieldCOLLISION(PLAYER.fx + 1, PLAYER.fy))
                 {
+                    PLAYER.strike = false;
                     PLAYER.x += PLAYER.speedx;
                     PLAYER.steps -= 1;
                     PLAYER.fx += 1;
@@ -318,6 +336,7 @@ function _onCanvasKeyDown(event) {
                             BOXES[i].x += 50;
                             BOXES[i].fx += 1;
                             PLAYER.steps -= 1;
+                            PLAYER.strike = true;
                         }
                     }
                 break;
@@ -332,6 +351,7 @@ function _onCanvasKeyDown(event) {
                     Advice = 0;
                 break;
         }
+        console.log(PLAYER.strike);
         _ifKeyTaken();
         _openChest();
         _winCHECK();
