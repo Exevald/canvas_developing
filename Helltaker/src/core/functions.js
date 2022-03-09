@@ -351,7 +351,6 @@ function _onCanvasKeyDown(event) {
                     Advice = 0;
                 break;
         }
-        console.log(PLAYER.strike);
         _ifKeyTaken();
         _openChest();
         _winCHECK();
